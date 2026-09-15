@@ -16,6 +16,33 @@ python3 -m http.server 8099
 
 Then open <http://localhost:8099>.
 
+## Publishing to GitHub
+
+The repository is initialised, committed on `main`, and the remote is already set to
+`git@github.com:victor-ogbonna/ogbontor-website.git`. SSH from this machine is authenticated as
+**victor-ogbonna**.
+
+**The repo does not exist on GitHub yet** — create it first (it cannot be created from here without
+the GitHub CLI or a token):
+
+1. Go to <https://github.com/new>
+2. Repository name: **`ogbontor-website`**
+3. Leave it **empty** — no README, no .gitignore, no licence (the commit already has them)
+4. Create, then run:
+
+```bash
+cd "/home/victorogbonna313/ogbontor website" && git push -u origin main
+```
+
+### Free hosting from that repo
+
+GitHub Pages will serve this site as-is, since there is no build step:
+**Settings -> Pages -> Source: Deploy from a branch -> `main` / `root`.**
+It appears at `https://victor-ogbonna.github.io/ogbontor-website/`, and a custom domain can be
+pointed at it from the same screen.
+
+---
+
 ## Deploy
 
 Upload the whole folder to any static host — Netlify, Vercel, GitHub Pages, Cloudflare
@@ -198,6 +225,46 @@ yet** — you need to deploy the script and paste one URL.
 
 That is it. Each submission appends a row. The header row is created from the first submission, and
 if you add a new question to the form later it becomes a new column instead of being dropped.
+
+### Do I need to create a Google Form?
+
+**No.** The two are different things, and the route already built is the simpler one:
+
+| | What it is | Verdict |
+|---|---|---|
+| **Apps Script -> Sheet** (built) | The site's own form posts JSON straight into your Sheet | **Use this.** Your design, your validation, no Google branding, one URL to paste |
+| **Google Form** | Google hosts the form; answers land in a linked Sheet | Only if you want Google's form UI instead of the site's |
+
+A Google Form's "response link" is **not** something you can paste into this site — it opens
+Google's own page. To post the site's form into a Google Form you would have to dig each field's
+hidden `entry.XXXXXXX` ID out of the page source and hard-code them, and they break whenever the
+form is edited. That is why the Apps Script route is the one wired up.
+
+So: deploy the script above, paste the URL, done. No form needed.
+
+### If you want a Google Form anyway
+
+Paste this into the Google Forms AI builder ("Help me create a form"):
+
+> Create a registration form for a free hardware engineering bootcamp called "Africa's Hardware
+> Revolution: From Spark to Ignition", run by Ogbontor Engineering Enterprise at the University of
+> Nigeria, Nsukka. Collect: full name (short answer, required); email address (short answer,
+> required, validated as an email); phone or WhatsApp number (short answer, required); current
+> status (multiple choice, required — Student at UNN Nsukka / Student at another institution /
+> Recent graduate / Not a student); institution (short answer); course or department (short
+> answer); which tracks they are most interested in (checkboxes, multiple selection — Robotics,
+> Embedded Systems, Internet of Things, PCB Design, CAD, IoT-Blockchain, IoT UI/UX, IoT Web
+> Development, Edge AI, 3D Printing, Fabrication); their current skill level (multiple choice,
+> required — Complete beginner, never built anything / Some exposure, a class or a tutorial or two
+> / Hobbyist, I have built a few things myself / Intermediate, I can take a project end to end /
+> Advanced, I work on hardware seriously); "What can you already do? Your present skill set, if
+> any" (paragraph); "What engineering or tech challenge are you facing right now?" (paragraph,
+> required); "What do you hope to learn here?" (paragraph, required); and "Anything else we should
+> know?" (paragraph). Set a friendly confirmation message saying their place is registered and that
+> dates will be sent by email and announced in the community WhatsApp group.
+
+Then in the Form: **Responses -> Link to Sheets**. Link it to the registration page with a button
+instead of the built-in form.
 
 ### What gets captured
 
