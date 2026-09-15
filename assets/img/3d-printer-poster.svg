@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" role="img" aria-label="3D printer video — poster placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0E2A5C"/><stop offset="1" stop-color="#08152B"/>
+    </linearGradient>
+    <pattern id="g" width="54" height="54" patternUnits="userSpaceOnUse">
+      <path d="M54 0H0V54" fill="none" stroke="#5C9BFF" stroke-opacity="0.16" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <rect width="1280" height="720" fill="url(#g)"/>
+  <g transform="translate(640 300)" fill="none" stroke="#5C9BFF" stroke-width="7" stroke-linecap="round" stroke-linejoin="round">
+    <rect x="-96" y="-96" width="192" height="192" rx="10" stroke-opacity="0.75"/>
+    <path d="M-96 -40h192M-40 -96v192" stroke-opacity="0.30"/>
+    <path d="M-52 52h104" stroke="#35C7E4"/>
+    <path d="M0 -34v70" stroke="#35C7E4"/>
+  </g>
+  <text x="640" y="470" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif"
+        font-size="40" font-weight="700" fill="#EAF1FB">3D printer clip goes here</text>
+  <text x="640" y="518" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif"
+        font-size="24" fill="#9DBEEC">Save the file as assets/video/3d-printer.mp4</text>
+  <text x="640" y="572" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace"
+        font-size="19" fill="#5C9BFF" letter-spacing="2">PORTRAIT CLIP &#183; SHOWN IN A LANDSCAPE STAGE</text>
+</svg>

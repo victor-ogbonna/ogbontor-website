@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" role="img" aria-label="Founder / Lead — placeholder image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EAF1FD"/><stop offset="1" stop-color="#D6E4FA"/>
+    </linearGradient>
+    <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" fill="none" stroke="#0B57D0" stroke-opacity="0.13" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <rect width="600" height="600" fill="url(#grid)"/>
+  <rect x="1" y="1" width="598" height="598" fill="none" stroke="#0B57D0" stroke-opacity="0.40" stroke-width="2" stroke-dasharray="9 7" rx="10"/>
+  <circle cx="300.0" cy="216.0" r="51.00000000000001" fill="none" stroke="#0B57D0" stroke-opacity="0.55" stroke-width="3"/><path d="M203.1 348.6 a96.9 89.25000000000001 0 0 1 193.8 0" fill="none" stroke="#0B57D0" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round"/>
+  <text x="50%" y="396.0" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif"
+        font-size="37.2" font-weight="700" fill="#0A2A5E">Founder / Lead</text>
+  <text x="50%" y="453.66" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace"
+        font-size="24.0" fill="#0B57D0" letter-spacing="1.6">REPLACE &#183; 600&#215;600</text>
+</svg>

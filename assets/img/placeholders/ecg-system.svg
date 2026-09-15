@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" role="img" aria-label="Smart ECG Measurement System — photo placeholder">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EAF1FD"/><stop offset="1" stop-color="#D6E4FA"/>
+    </linearGradient>
+    <pattern id="pcb" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M40 0H0V40" fill="none" stroke="#0B57D0" stroke-opacity="0.13" stroke-width="1.5"/>
+      <circle cx="0" cy="40" r="2.5" fill="#0B57D0" fill-opacity="0.18"/>
+    </pattern>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <rect width="800" height="500" fill="url(#pcb)"/>
+  <rect x="1.5" y="1.5" width="797" height="497" fill="none" stroke="#0B57D0" stroke-opacity="0.35"
+        stroke-width="3" stroke-dasharray="12 9" rx="10"/>
+  <g transform="translate(400 196)">
+    <rect x="-34" y="-34" width="68" height="68" rx="7" fill="none" stroke="#0B57D0" stroke-opacity="0.55" stroke-width="4"/>
+    <rect x="-13" y="-13" width="26" height="26" rx="3" fill="#0B57D0" fill-opacity="0.35"/>
+    <path d="M-34 -17h-16M-34 0h-16M-34 17h-16M34 -17h16M34 0h16M34 17h16"
+          stroke="#0B57D0" stroke-opacity="0.55" stroke-width="4" stroke-linecap="round"/>
+  </g>
+  <text x="400" y="312" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif"
+        font-size="30" font-weight="700" fill="#0A2A5E">Smart ECG Measurement System</text>
+  <text x="400" y="350" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif"
+        font-size="19" fill="#3A5A88">In development at the lab</text>
+  <text x="400" y="394" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace"
+        font-size="16" fill="#0B57D0" letter-spacing="2.4">ADD PHOTO &#183; 800&#215;500</text>
+</svg>

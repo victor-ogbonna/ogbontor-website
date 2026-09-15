@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 420" role="img" aria-label="WhatsApp Community QR — placeholder image">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#EAF1FD"/><stop offset="1" stop-color="#D6E4FA"/>
+    </linearGradient>
+    <pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse">
+      <path d="M26 0H0V26" fill="none" stroke="#0B57D0" stroke-opacity="0.13" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="420" height="420" fill="url(#bg)"/>
+  <rect width="420" height="420" fill="url(#grid)"/>
+  <rect x="1" y="1" width="418" height="418" fill="none" stroke="#0B57D0" stroke-opacity="0.40" stroke-width="2" stroke-dasharray="9 7" rx="10"/>
+  <rect x="142.8" y="109.2" width="42.0" height="42.0" fill="none" stroke="#0A8FB3" stroke-opacity="0.65" stroke-width="3" rx="2"/><rect x="235.20000000000002" y="109.2" width="42.0" height="42.0" fill="none" stroke="#0A8FB3" stroke-opacity="0.65" stroke-width="3" rx="2"/><rect x="142.8" y="201.60000000000002" width="42.0" height="42.0" fill="none" stroke="#0A8FB3" stroke-opacity="0.65" stroke-width="3" rx="2"/><rect x="249.9" y="216.3" width="18.900000000000002" height="18.900000000000002" fill="#0A8FB3" fill-opacity="0.65"/>
+  <text x="50%" y="277.2" text-anchor="middle" font-family="ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,sans-serif"
+        font-size="26.0" font-weight="700" fill="#0A2A5E">WhatsApp Community QR</text>
+  <text x="50%" y="317.562" text-anchor="middle" font-family="ui-monospace,SFMono-Regular,Menlo,monospace"
+        font-size="16.8" fill="#0B57D0" letter-spacing="1.6">REPLACE &#183; 420&#215;420</text>
+</svg>
