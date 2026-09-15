@@ -971,24 +971,3 @@ p  { text-wrap: pretty; }
   .alert-bar p > svg { display: none; }
   .alert-bar a.alert-cta { font-size: .78rem; padding-inline: .8rem; }
 }
-
-/* ---------- "As featured in" press strip ----------
-   Rendered only when PRESS in tools/build.py has entries. */
-.press-label {
-  text-align: center; font-family: var(--font-mono); font-size: .68rem;
-  letter-spacing: .2em; text-transform: uppercase; color: var(--text-subtle);
-  margin-bottom: 1.3rem;
-}
-.press-strip {
-  display: flex; flex-wrap: wrap; align-items: center; justify-content: center;
-  gap: clamp(1.5rem, 5vw, 3.5rem);
-}
-.press-item { display: block; }
-.press-item img {
-  max-height: 34px; width: auto; opacity: .55;
-  filter: grayscale(1);
-  transition: opacity .22s, filter .22s;
-}
-.press-item:hover img { opacity: 1; filter: none; }
-[data-theme="dark"] .press-item img { filter: grayscale(1) invert(1) brightness(1.7); }
-[data-theme="dark"] .press-item:hover img { filter: invert(1) brightness(1.7); }

@@ -15,13 +15,6 @@ ORG        = "Ogbontor Engineering Enterprise"
 ORG_SHORT  = "Ogbontor"
 RC         = "9862078"
 REGISTER_ENDPOINT = "https://script.google.com/macros/s/AKfycbyH2rW40zmKwwqDDqF91gTuwTG6fb1hSAtO6N1WHHh8ukCKSzHLNXvC14F_ccUOmxnA/exec"
-# "As featured in" — add an entry the moment real coverage lands and the strip
-# appears on the home page by itself. Leave it empty and nothing is rendered.
-# Each entry: (outlet name, logo file in assets/img/press/, URL of the article)
-PRESS = [
-    # ("TechCabal", "techcabal.png", "https://techcabal.com/..."),
-]
-
 PORTFOLIO  = [
   ("Joint-Agent IDE", "jointagentide.com", "https://jointagentide.com",
    "An autonomous agent for embedded development — writes firmware, compiles, debugs and flashes real hardware from the browser."),
@@ -483,22 +476,8 @@ def build_home():
             <div><strong>{name}</strong><br><span class="muted">{len(mods)} {"modules" if len(mods)!=1 else "module"} &middot; {blurb}</span></div>
           </li>''' for rn, name, blurb, mods in CURRICULUM)
 
-    press_html = ""
-    if PRESS:
-        items = "\n".join(
-            f'''        <a class="press-item" href="{url}" target="_blank" rel="noopener">
-          <img src="assets/img/press/{logo}" alt="{name}" loading="lazy">
-        </a>''' for name, logo, url in PRESS)
-        press_html = f'''  <section class="section section--tight" id="press">
-    <div class="container">
-      <p class="press-label">As featured in</p>
-      <div class="press-strip reveal">
-{items}
-      </div>
-    </div>
-  </section>
-
-'''
+    partners = "\n".join(f'        <div><img src="assets/img/partners/partner-{i}.svg" alt="Partner {i} logo — placeholder" loading="lazy"></div>'
+                         for i in range(1, 7))
 
     body = f'''  <section class="hero">
     <div class="backdrop"><div class="grid-lines"></div></div>
@@ -817,7 +796,7 @@ def build_home():
     </div>
   </section>
 
-{press_html}  <section class="section section--alt" id="sponsors">
+  <section class="section section--alt" id="sponsors">
     <div class="container">
       <div class="sec-head sec-head--center">
         <span class="eyebrow">{ico("link")} Partners &amp; sponsors</span>
@@ -850,8 +829,12 @@ def build_home():
         </article>
       </div>
 
-      <div class="sponsor-cta mt-4 reveal">
-        <h3>Be the first name on this page</h3>
+      <div class="partners mt-4 reveal">
+{partners}
+      </div>
+
+      <div class="sponsor-cta mt-3 reveal">
+        <h3>This space is for your logo</h3>
         <p>Sponsorship packages are open now — equipment, component budgets, speaker travel, internship
           places or straightforward funding. Tell us what you have in mind and we will send the deck.</p>
         <div class="hero-cta" style="justify-content:center">

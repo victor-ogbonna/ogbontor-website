@@ -127,40 +127,13 @@ Four projects have no usable still image and use a blue SVG placeholder in
 | `assets/img/companies/joint-agent.png`, `cng-protect.jpg` | Portfolio company logos |
 | `assets/img/gallery/solar-build-process.jpg` | Replaced with the higher-quality build photo |
 
-### "As featured in" press logos
-
-There is **no press coverage yet** — a search for both "Ogbontor Engineering Enterprise" and the
-old "ESR-Nigeria" name returns nothing. So the site carries no press strip, and the sponsorship
-section shows no logos rather than empty boxes.
-
-The strip is built and waiting. When real coverage lands:
-
-1. Save the outlet's logo (PNG or SVG, transparent, roughly 200px wide) into `assets/img/press/`
-2. Add a line to `PRESS` near the top of `tools/build.py`:
-
-```python
-PRESS = [
-    ("TechCabal", "techcabal.png", "https://techcabal.com/2026/..."),
-]
-```
-
-3. Run `python3 tools/build.py`
-
-The "As featured in" strip then appears on the home page automatically, each logo linking to the
-article. Leave `PRESS` empty and nothing renders — no empty boxes, no placeholder.
-
-The same rule applies to sponsor logos: add them once an organisation has actually agreed.
-Publishing a company's mark before that claims a relationship you do not have, and uses their
-trademark without permission.
-
 ### Still placeholders
-
-
 
 The only ones left:
 
 | File | What it needs |
 |---|---|
+| `assets/img/partners/partner-*.svg` | Partner and sponsor logos. |
 
 `assets/img/legacy/` holds the old ESR-Nigeria logo and QR code. They are not referenced by
 any page — kept only for reference. Delete the folder when you no longer want them.
