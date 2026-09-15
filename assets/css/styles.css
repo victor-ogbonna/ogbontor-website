@@ -864,3 +864,48 @@ p  { text-wrap: pretty; }
 .project--linked { position: relative; }
 .project--linked:hover .project-out { color: var(--accent); }
 .project--linked:focus-within { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+
+/* ---------- SIWES highlight ---------- */
+.siwes-panel {
+  position: relative; overflow: hidden;
+  border: 1px solid var(--accent-line); border-radius: var(--r-xl);
+  background: var(--surface-2);
+  padding: clamp(1.6rem, 4vw, 2.8rem) clamp(1.4rem, 4vw, 2.6rem);
+  box-shadow: var(--shadow);
+}
+.siwes-panel::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(620px circle at 88% -20%, var(--accent-soft), transparent 62%);
+}
+.siwes-panel::after {
+  content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 5px;
+  background: var(--grad);
+}
+.siwes-panel > * { position: relative; }
+.siwes-grid { display: grid; gap: clamp(1.4rem, 3vw, 2.4rem); align-items: center; }
+@media (min-width: 900px) { .siwes-grid { grid-template-columns: 1.15fr .85fr; } }
+.siwes-points { list-style: none; padding: 0; display: grid; gap: .6rem; margin-top: 1.3rem; }
+.siwes-points li { display: flex; gap: .65rem; align-items: flex-start; font-size: .92rem; color: var(--text-muted); }
+.siwes-points svg { width: 17px; height: 17px; color: var(--accent); flex: none; margin-top: .2rem; }
+.rnd-chips { display: flex; flex-wrap: wrap; gap: .5rem; }
+.rnd-chips span {
+  display: inline-flex; align-items: center; gap: .45rem;
+  background: var(--accent-soft); border: 1px solid var(--accent-line); color: var(--accent);
+  padding: .5rem .85rem; border-radius: 999px; font-size: .84rem; font-weight: 600;
+}
+.rnd-chips svg { width: 15px; height: 15px; flex: none; }
+.rnd-chips .chip-note {
+  background: var(--surface-3); border-color: var(--line); color: var(--text-muted); font-weight: 500;
+}
+
+/* the SIWES block on the programs page gets the same accent treatment */
+.section--highlight {
+  background:
+    radial-gradient(760px circle at 92% -10%, var(--accent-soft), transparent 60%),
+    var(--surface);
+  border-block: 1px solid var(--accent-line);
+  position: relative;
+}
+.section--highlight::before {
+  content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--grad);
+}

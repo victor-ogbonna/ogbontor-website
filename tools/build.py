@@ -679,6 +679,40 @@ def build_home():
     </div>
   </section>
 
+  <section class="section" id="siwes-teaser">
+    <div class="container">
+      <div class="siwes-panel reveal">
+        <div class="siwes-grid">
+          <div>
+            <span class="eyebrow">{ico("briefcase")} SIWES &amp; IT placements</span>
+            <h2 class="mt-2">Do your industrial training somewhere you actually build</h2>
+            <p class="lede mt-2">We host <strong>SIWES and IT students</strong> from universities,
+              polytechnics and colleges of education. You get a bench, a project team and a supervisor who
+              can assess the engineering you did — not a logbook you fill in at the end of the month.</p>
+            <ul class="siwes-points">
+              <li>{ico("check")}<span>Logbooks signed and ITF documentation handled properly.</span></li>
+              <li>{ico("check")}<span>You join a real project team with a deliverable and a deadline.</span></li>
+              <li>{ico("check")}<span>Same curriculum our members take — embedded, robotics, IoT, PCB, CAD, edge AI.</span></li>
+            </ul>
+            <a class="btn btn--primary mt-3" href="programs.html#siwes">
+              {ico("briefcase")} More about SIWES &amp; IT placements {ico("arrow")}
+            </a>
+          </div>
+
+          <div>
+            <p class="eyebrow" style="margin-bottom:.9rem">{ico("atom")} R&amp;D you can join</p>
+            <div class="rnd-chips">
+              <span>{ico("motor")} Electric motor manufacturing</span>
+              <span>{ico("plane")} Manned aircraft prototyping</span>
+              <span>{ico("chip2")} Microchip technology</span>
+              <span class="chip-note">{ico("award")} First student-led hardware lab in South-East Nigeria to prototype in these areas</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="section">
     <div class="container">
       <div class="split split--flip">
@@ -1140,7 +1174,7 @@ def build_programs():
     </div>
   </section>
 
-  <section class="section" id="siwes">
+  <section class="section section--highlight" id="siwes">
     <div class="container">
       <div class="sec-head">
         <span class="eyebrow">{ico("briefcase")} SIWES &amp; IT placements</span>
