@@ -116,15 +116,24 @@ Four projects have no usable still image and use a blue SVG placeholder in
 | `cng-protect.svg` | CNG Protect | Pending — not built yet |
 | `ecg-system.svg` | Smart ECG System | Pending — not built yet |
 
-### Other placeholders to replace
+### Real assets now in place
+
+| File | What it is |
+|---|---|
+| `assets/img/logo.png`, `favicon.png` | The Ogbontor mark |
+| `assets/img/africa-circuit.png` | Africa-as-circuit-board graphic (transparent PNG) on both bootcamp banners |
+| `assets/img/whatsapp-qr.png` | Branded WhatsApp community QR, on the community page |
+| `assets/img/team/founder.jpg` | Founder portrait on the about page |
+| `assets/img/companies/joint-agent.png`, `cng-protect.jpg` | Portfolio company logos |
+| `assets/img/gallery/solar-build-process.jpg` | Replaced with the higher-quality build photo |
+
+### Still placeholders
+
+The only ones left:
 
 | File | What it needs |
 |---|---|
-| `assets/img/logo.svg` | Your real Ogbontor logo. Used in the header and footer. |
-| `assets/img/favicon.svg` | Browser tab icon. |
-| `assets/img/team/lead-*.svg` | Six leadership portraits (square). Names and roles are in `build_about()`. |
 | `assets/img/partners/partner-*.svg` | Partner and sponsor logos. |
-| `assets/img/whatsapp-qr.svg` | QR code for the WhatsApp community. |
 
 `assets/img/legacy/` holds the old ESR-Nigeria logo and QR code. They are not referenced by
 any page — kept only for reference. Delete the folder when you no longer want them.

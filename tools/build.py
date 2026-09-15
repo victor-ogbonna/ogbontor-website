@@ -627,8 +627,8 @@ def build_home():
         </div>
         </div>
         <div class="bootcamp-art">
-          <img src="assets/img/africa-circuit.svg"
-               alt="Africa drawn as a circuit board, with the lab at UNN Nsukka marked" width="330" height="362" loading="lazy">
+          <img src="assets/img/africa-circuit.png"
+               alt="Africa drawn as a circuit board, with the lab at UNN Nsukka marked" width="330" height="440" loading="lazy">
         </div>
        </div>
       </div>
@@ -1145,8 +1145,8 @@ def build_programs():
         </div>
         </div>
         <div class="bootcamp-art">
-          <img src="assets/img/africa-circuit.svg"
-               alt="Africa drawn as a circuit board, with the lab at UNN Nsukka marked" width="330" height="377" loading="lazy">
+          <img src="assets/img/africa-circuit.png"
+               alt="Africa drawn as a circuit board, with the lab at UNN Nsukka marked" width="330" height="440" loading="lazy">
         </div>
        </div>
       </div>
@@ -1568,7 +1568,7 @@ def build_community():
         <p>That is the entire joining process. Scan the code or follow the link, say what you study and what
           you would like to build.</p>
         <div style="display:flex;justify-content:center;margin:1.75rem 0 .5rem">
-          <img src="assets/img/whatsapp-qr.svg" alt="QR code for the WhatsApp community — placeholder" width="180" height="180"
+          <img src="assets/img/whatsapp-qr.png" alt="QR code for the Ogbontor WhatsApp community" width="180" height="180"
                style="border-radius:var(--r);border:1px solid var(--line)">
         </div>
         <div class="hero-cta">
