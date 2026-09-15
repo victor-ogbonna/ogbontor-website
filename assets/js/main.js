@@ -265,17 +265,34 @@
     }
 
     function collect() {
-      var data = {}, tracks = [];
+      var data = {}, tracks = [], events = [];
       new FormData(form).forEach(function (v, k) {
         v = String(v).trim();
         if (!v) return;
         if (k === "tracks") tracks.push(v);
+        else if (k === "events") events.push(v);
         else data[k] = v;
       });
+      data["Attending"] = events.join(", ");
       data["Tracks of interest"] = tracks.join(", ");
       data["Submitted at"] = new Date().toISOString();
       data["Source"] = location.hostname || "local";
       return data;
+    }
+
+    // a checkbox group cannot be "required" in HTML, so enforce at-least-one here
+    function requireOne() {
+      var group = form.querySelector("[data-require-one]");
+      if (!group) return true;
+      var name = group.getAttribute("data-require-one");
+      var boxes = form.querySelectorAll('input[name="' + name + '"]');
+      var any = Array.prototype.some.call(boxes, function (b) { return b.checked; });
+      if (!any) {
+        say("err", "Please tick at least one thing you want to attend.");
+        group.scrollIntoView({ block: "center", behavior: "smooth" });
+        if (boxes[0]) boxes[0].focus();
+      }
+      return any;
     }
 
     function mailtoFallback(data) {
@@ -289,6 +306,7 @@
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (!form.checkValidity()) { form.reportValidity(); return; }
+      if (!requireOne()) return;
 
       var endpoint = (form.getAttribute("data-endpoint") || "").trim();
       var data = collect();
@@ -303,21 +321,56 @@
       if (button) { button.disabled = true; button.textContent = "Submitting…"; }
       say("ok", "Sending your registration…");
 
+      var body = JSON.stringify(data);
+      var done = function (msg, kind) {
+        if (kind !== "err") form.reset();
+        say(kind || "ok", msg);
+        if (button) { button.disabled = false; button.innerHTML = original; }
+      };
+
+      // Apps Script cold-starts can take 30s+, so allow generous headroom before
+      // giving up — aborting early would throw away a submission that was fine.
+      var controller = ("AbortController" in window) ? new AbortController() : null;
+      var timer = setTimeout(function () {
+        if (controller) controller.abort();
+      }, 60000);
+      var slowNote = setTimeout(function () {
+        say("ok", "Still sending… the registration server can take up to a minute to wake up. Please don't close this page.");
+      }, 6000);
+
       fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "text/plain;charset=utf-8" },
-        body: JSON.stringify(data)
+        body: body,
+        signal: controller ? controller.signal : undefined
       }).then(function (r) {
+        clearTimeout(timer); clearTimeout(slowNote);
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.text();
       }).then(function () {
-        form.reset();
-        say("ok", "You are registered. We will email you with the dates and what to bring — check your spam folder if you don't see it.");
+        done("You are registered. We will email you with the dates and what to bring — check your spam folder if you don't see it.");
       }).catch(function () {
-        say("err", "We could not reach the registration server. Opening your email app instead so your registration still reaches us.");
-        mailtoFallback(data);
-      }).then(function () {
-        if (button) { button.disabled = false; button.innerHTML = original; }
+        clearTimeout(timer); clearTimeout(slowNote);
+        // The response may have been unreadable (CORS/redirect/timeout) even though
+        // the row would have been written. Retry once fire-and-forget: an opaque
+        // no-cors POST still reaches Apps Script, we just cannot read the reply.
+        try {
+          fetch(endpoint, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "text/plain;charset=utf-8" },
+            body: body
+          }).then(function () {
+            done("Your registration has been sent. If you don't hear from us within a few days, email " +
+                 form.getAttribute("data-fallback-email") + " so we can check.");
+          }).catch(function () {
+            done("We could not reach the registration server. Opening your email app instead so your registration still reaches us.", "err");
+            mailtoFallback(data);
+          });
+        } catch (e) {
+          done("We could not reach the registration server. Opening your email app instead so your registration still reaches us.", "err");
+          mailtoFallback(data);
+        }
       });
     });
   });

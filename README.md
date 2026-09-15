@@ -209,80 +209,51 @@ To change the logo, replace the source PNG and re-run the crop, or just overwrit
 
 ## Registration -> Google Sheet
 
-The registration form on `register.html` posts straight into a Google Sheet. **It is not connected
-yet** — you need to deploy the script and paste one URL.
+**This is live and verified.** The form on `register.html` posts into your Google Sheet through the
+Apps Script web app; the endpoint is already set in `REGISTER_ENDPOINT`.
 
-### Setup (about five minutes)
+Verified end to end on 15 Sep 2026: `doPost` returned `{"result":"ok"}` (HTTP 200) and a full form
+submission cleared and confirmed.
 
-1. Create (or open) the Google Sheet you want registrations to land in.
-2. **Extensions -> Apps Script**, delete the placeholder code, and paste in the contents of
-   [`tools/google-apps-script.gs`](tools/google-apps-script.gs). Save.
-3. **Deploy -> New deployment -> Web app**, with:
-   - *Execute as:* **Me**
-   - *Who has access:* **Anyone**
-4. Copy the `/exec` URL it gives you.
-5. Open `tools/build.py`, put that URL in `REGISTER_ENDPOINT`, and run `python3 tools/build.py`.
+> **Delete the test rows.** Verification wrote rows named `TEST ROW - please delete`,
+> `E2E TEST - please delete` and `E2E FORM TEST - please delete`.
 
-That is it. Each submission appends a row. The header row is created from the first submission, and
-if you add a new question to the form later it becomes a new column instead of being dropped.
+### A note on speed
 
-### Do I need to create a Google Form?
+Apps Script **cold starts are slow** — the first call measured **36 seconds**; warm calls settle
+around **8 seconds**. The form is built for that:
 
-**No.** The two are different things, and the route already built is the simpler one:
-
-| | What it is | Verdict |
-|---|---|---|
-| **Apps Script -> Sheet** (built) | The site's own form posts JSON straight into your Sheet | **Use this.** Your design, your validation, no Google branding, one URL to paste |
-| **Google Form** | Google hosts the form; answers land in a linked Sheet | Only if you want Google's form UI instead of the site's |
-
-A Google Form's "response link" is **not** something you can paste into this site — it opens
-Google's own page. To post the site's form into a Google Form you would have to dig each field's
-hidden `entry.XXXXXXX` ID out of the page source and hard-code them, and they break whenever the
-form is edited. That is why the Apps Script route is the one wired up.
-
-So: deploy the script above, paste the URL, done. No form needed.
-
-### If you want a Google Form anyway
-
-Paste this into the Google Forms AI builder ("Help me create a form"):
-
-> Create a registration form for a free hardware engineering bootcamp called "Africa's Hardware
-> Revolution: From Spark to Ignition", run by Ogbontor Engineering Enterprise at the University of
-> Nigeria, Nsukka. Collect: full name (short answer, required); email address (short answer,
-> required, validated as an email); phone or WhatsApp number (short answer, required); current
-> status (multiple choice, required — Student at UNN Nsukka / Student at another institution /
-> Recent graduate / Not a student); institution (short answer); course or department (short
-> answer); which tracks they are most interested in (checkboxes, multiple selection — Robotics,
-> Embedded Systems, Internet of Things, PCB Design, CAD, IoT-Blockchain, IoT UI/UX, IoT Web
-> Development, Edge AI, 3D Printing, Fabrication); their current skill level (multiple choice,
-> required — Complete beginner, never built anything / Some exposure, a class or a tutorial or two
-> / Hobbyist, I have built a few things myself / Intermediate, I can take a project end to end /
-> Advanced, I work on hardware seriously); "What can you already do? Your present skill set, if
-> any" (paragraph); "What engineering or tech challenge are you facing right now?" (paragraph,
-> required); "What do you hope to learn here?" (paragraph, required); and "Anything else we should
-> know?" (paragraph). Set a friendly confirmation message saying their place is registered and that
-> dates will be sent by email and announced in the community WhatsApp group.
-
-Then in the Form: **Responses -> Link to Sheets**. Link it to the registration page with a button
-instead of the built-in form.
+- 60-second timeout, so a cold start is never aborted mid-flight
+- a "still sending…" message after 6 seconds so nobody thinks it has hung
+- if the response cannot be read, one fire-and-forget `no-cors` retry (the row still lands)
+- only if that fails does it fall back to opening the visitor's email client
 
 ### What gets captured
 
-Name, email, phone, status, institution, course, tracks of interest, skill level, and the three
-questions you asked for:
+Name, email, phone, status, institution, course, **which events they are attending**, tracks of
+interest, skill level, and the three questions:
 
 - **What can you already do?** (present skill set)
 - **What engineering or tech challenge are you facing right now?**
 - **What do you hope to learn here?**
 
-Plus a timestamp and the source hostname. Verified end to end against a stand-in endpoint — 13
-clean fields arrive as JSON.
+Plus a timestamp and source hostname.
 
-### If it is not configured
+### If you edit the script
 
-The form falls back to opening the visitor's email client with their answers filled in, addressed
-to `info@ogbontor.com`. The same fallback catches network failures, so a registration is never
-silently lost.
+Apps Script keeps serving the old code until you redeploy: **Deploy -> Manage deployments ->
+Edit (pencil) -> Version: New version -> Deploy.** The URL stays the same.
+
+---
+
+## The three events
+
+The programme is a bootcamp, a hackathon inside it, and a one-day conference afterwards. All three
+are described on `register.html`, and the form asks which the person is attending (at least one is
+required — enforced in JS, since HTML cannot mark a checkbox group required).
+
+Edit them in `EVENTS` in `tools/build.py`. **Hackathon prizes are described as "to be revealed"** —
+set the real ones there when you have them.
 
 ---
 

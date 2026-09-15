@@ -909,3 +909,65 @@ p  { text-wrap: pretty; }
 .section--highlight::before {
   content: ""; position: absolute; left: 0; right: 0; top: 0; height: 3px; background: var(--grad);
 }
+
+/* ---------- Founder ---------- */
+.founder {
+  display: grid; gap: clamp(1.4rem, 3.5vw, 2.6rem); align-items: center;
+  background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r-xl);
+  padding: clamp(1.5rem, 4vw, 2.6rem); box-shadow: var(--shadow); max-width: 900px; margin-inline: auto;
+}
+@media (min-width: 720px) { .founder { grid-template-columns: 220px 1fr; } }
+.founder img {
+  width: 100%; max-width: 220px; aspect-ratio: 1; object-fit: cover;
+  border-radius: var(--r-lg); border: 1px solid var(--line); margin-inline: auto; display: block;
+}
+.founder-role {
+  font-family: var(--font-mono); font-size: .68rem; letter-spacing: .18em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+}
+.founder h3 { margin: .35rem 0 .8rem; font-size: clamp(1.2rem, 2.4vw, 1.5rem); }
+.founder-bio { font-size: .94rem; color: var(--text-muted); }
+.founder-links { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.3rem; }
+.founder-links .btn { font-size: .86rem; padding: .62rem 1rem; }
+
+/* ---------- Touch targets on small screens ----------
+   Footer and breadcrumb links are small text by design; on touch devices they
+   need a target you can actually hit, so give them height without changing the
+   visual type size. */
+@media (max-width: 720px) {
+  .footer-col ul { gap: .1rem; }
+  .footer-col li a,
+  .footer-contact li a {
+    display: inline-flex; align-items: center; min-height: 44px;
+  }
+  .footer-contact li { align-items: center; }
+  .crumbs a { display: inline-block; padding-block: .6rem; }
+  .footer-bottom { gap: .35rem 1.5rem; }
+  .footer-bottom a { display: inline-flex; align-items: center; min-height: 40px; }
+}
+
+/* Pointer-coarse devices of any width get the same treatment */
+@media (pointer: coarse) {
+  .footer-col li a, .footer-contact li a { min-height: 44px; display: inline-flex; align-items: center; }
+}
+
+@media (pointer: coarse) {
+  .alert-bar a.alert-cta { padding-block: .6rem; }
+  .socials a { width: 44px; height: 44px; }
+  .icon-btn { width: 44px; height: 44px; }
+}
+
+/* ---------- Alert bar on small screens ----------
+   The full strapline wraps into unreadable columns below ~720px, so it drops out
+   and the bar keeps the pill, the headline and the call to action. */
+.alert-bar p { flex-wrap: wrap; justify-content: center; }
+@media (max-width: 720px) {
+  .alert-bar .alert-tagline { display: none; }
+  .alert-bar .container { padding-block: .55rem; gap: .5rem; }
+  .alert-bar p { font-size: .8rem; gap: .45rem; }
+  .alert-bar .pill { font-size: .58rem; padding: .14rem .5rem; }
+}
+@media (max-width: 420px) {
+  .alert-bar p > svg { display: none; }
+  .alert-bar a.alert-cta { font-size: .78rem; padding-inline: .8rem; }
+}

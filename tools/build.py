@@ -13,16 +13,15 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 ORG        = "Ogbontor Engineering Enterprise"
 ORG_SHORT  = "Ogbontor"
-# Registration number withheld until the correct one is supplied.
-RC         = None
-REGISTER_ENDPOINT = ""   # paste your Google Apps Script web-app URL here (see README)
+RC         = "9862078"
+REGISTER_ENDPOINT = "https://script.google.com/macros/s/AKfycbyH2rW40zmKwwqDDqF91gTuwTG6fb1hSAtO6N1WHHh8ukCKSzHLNXvC14F_ccUOmxnA/exec"
 PORTFOLIO  = [
   ("Joint-Agent IDE", "jointagentide.com", "https://jointagentide.com",
    "An autonomous agent for embedded development — writes firmware, compiles, debugs and flashes real hardware from the browser."),
   ("CNG Protect", "cngprotect.com", "https://cngprotect.com",
    "Smart IoT-blockchain monitoring for compressed-natural-gas cylinders — pressure, integrity and custody, verifiable on chain."),
 ]
-EMAIL      = "info@ogbontor.com"
+EMAIL      = "victorogbonna313@gmail.com"   # switch to info@ogbontor.com once that mailbox is live
 PHONE      = "+234 903 6494 405"
 PHONE_TEL  = "+2349036494405"
 WHATSAPP   = "https://chat.whatsapp.com/CBLct4fEPPa8FAFz10cGH8"
@@ -89,6 +88,18 @@ def ico(name, cls=""):
             f'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{ICONS[name]}</svg>')
 
 
+EVENTS = [
+ ("book",  "The bootcamp",
+  "Hands-on sessions across all eleven tracks at UNN Nsukka. Free, hardware supplied, no prior experience needed.",
+  "Free &middot; several days"),
+ ("zap",   "The hackathon",
+  "Runs inside the bootcamp. Teams build against a brief, and there are prizes — we will reveal them shortly.",
+  "During the bootcamp"),
+ ("award", "The conference",
+  "A one-day hardware technology conference a few days after the bootcamp, with talks and demos. Hackathon winners are announced here.",
+  "One day &middot; after the bootcamp"),
+]
+
 BOOTCAMP_TRACKS = [
  ("bot",     "Robotics"),
  ("cpu",     "Embedded Systems"),
@@ -145,6 +156,7 @@ def head(title, desc, page):
   "email": "{EMAIL}",
   "telephone": "{PHONE_TEL}",
   "slogan": "{TAGLINE}",
+  "identifier": "RC {RC}",
   "address": {{
     "@type": "PostalAddress",
     "streetAddress": "1 Lion Science Park Road, University of Nigeria",
@@ -203,7 +215,8 @@ def head(title, desc, page):
     <p>
       {ico("megaphone")}
       <span class="pill">Registration open</span>
-      <strong>Free hardware bootcamp</strong> &mdash; Africa's Hardware Revolution: From Spark to Ignition
+      <strong>Free bootcamp, hackathon &amp; conference</strong>
+      <span class="alert-tagline">&mdash; Africa's Hardware Revolution: From Spark to Ignition</span>
     </p>
     <a class="alert-cta" href="register.html">Register free {ico("arrow")}</a>
   </div>
@@ -266,7 +279,7 @@ FOOTER = f'''</main>
     </div>
 
     <div class="footer-bottom">
-      <span>&copy; <span data-year>2026</span> {ORG}. All rights reserved.</span>
+      <span>&copy; <span data-year>2026</span> {ORG}. All rights reserved. &middot; RC {RC}</span>
       <span class="mono">Our tomorrow is indeed here.</span>
     </div>
   </div>
@@ -441,14 +454,14 @@ def build_home():
             zip(PORTFOLIO, ["joint-agent.png", "cng-protect.jpg"])))
     featured = "\n".join(project_card(p, "built") for p in PROJECTS_BUILT[:6])
     stats = "\n".join([
-        stat(13, "Projects in the portfolio"),
+        stat(14, "Projects in the portfolio"),
         stat(19, "Curriculum modules"),
         stat(5,  "Skill tiers, foundation to capstone"),
         stat(1,  "Hardware lab at UNN Nsukka"),
     ])
     pillars = [
       ("book",  "We train",     "A 19-module curriculum that runs from Ohm's law to FPGA design and edge AI — taught hands-on, with a board in front of you, not slides."),
-      ("wrench","We build",     "Members work on real prototypes from week one. Thirteen systems are on our bench so far, from assistive tech to grid instrumentation."),
+      ("wrench","We build",     "Members work on real prototypes from week one. Fourteen systems are on our bench so far, from assistive tech to grid instrumentation."),
       ("rocket","We incubate",  "Capstone projects that prove themselves become products. We help members with patents, pitches, pilot users and company formation."),
       ("globe", "We manufacture","The long game: hardware designed and assembled here in Enugu — consumer electronics, vehicles, instruments — instead of imported and repaired."),
     ]
@@ -595,6 +608,10 @@ def build_home():
            Nsukka</strong>. No fee, no prior electronics experience, no particular course of study required.
            Come to learn, come to build, and come to be inspired by what is already being made here.
            Other selected universities across South-East Nigeria follow next &mdash; at least one in each state.</p>
+        <p style="margin-top:.9rem"><strong>It is more than a bootcamp.</strong> A hackathon runs inside it
+           &mdash; teams building against a brief, with prizes to be revealed &mdash; and a
+           <strong>one-day hardware technology conference</strong> follows a few days later, where the
+           hackathon winners are announced.</p>
         <div class="bootcamp-facts">
           <span>{ico("check")} Completely free</span>
           <span>{ico("users")} Students &amp; individuals welcome</span>
@@ -653,7 +670,7 @@ def build_home():
 {featured}
       </div>
       <div class="center mt-4">
-        <a class="btn btn--ghost btn--lg" href="projects.html">View all 13 projects {ico("arrow")}</a>
+        <a class="btn btn--ghost btn--lg" href="projects.html">View all 14 projects {ico("arrow")}</a>
       </div>
     </div>
   </section>
@@ -865,20 +882,28 @@ def page_hero(eyebrow_icon, eyebrow, title, lede, crumb):
 
 # ----------------------------------------------------------------- about ----
 def build_about():
-    team = [
-      ("lead-founder.svg",      "Your Name Here", "Founder &amp; Lead Engineer"),
-      ("lead-programs.svg",     "Your Name Here", "Head of Programs"),
-      ("lead-engineering.svg",  "Your Name Here", "Head of Engineering"),
-      ("lead-community.svg",    "Your Name Here", "Community Lead"),
-      ("lead-research.svg",     "Your Name Here", "Research Lead"),
-      ("lead-partnerships.svg", "Your Name Here", "Partnerships Lead"),
-    ]
-    team_html = "\n".join(f'''        <article class="person reveal" data-delay="{i*0.06:.2f}">
-          <img src="assets/img/team/{img}" alt="{role} — portrait placeholder" loading="lazy" width="400" height="400">
-          <h3>{name}</h3>
-          <p>{role}</p>
-        </article>''' for i,(img,name,role) in enumerate(team))
+    team_html = '''        <article class="founder reveal">
+          <img src="assets/img/team/founder.jpg" alt="Victor Ogbonna, founder of Ogbontor Engineering Enterprise"
+               width="360" height="360" loading="lazy">
+          <div>
+            <p class="founder-role">Founder</p>
+            <h3>Victor Ogbonna</h3>
+            <p class="founder-bio">Ogbontor is run by one person and a community. I started it because the
+              capacity to build hardware in Nigeria is already here — what was missing was a bench, a
+              curriculum that goes deep enough to matter, and a room full of people working on the same
+              problem at the same time. Everything on this site came out of that room.</p>
+            <div class="founder-links">
+              <a class="btn btn--ghost" href="mailto:{EMAIL}">{{ico_mail}} Email me</a>
+              <a class="btn btn--ghost" href="{WHATSAPP}" target="_blank" rel="noopener">{{ico_wa}} Community</a>
+            </div>
+          </div>
+        </article>'''
 
+    team_html = (team_html
+                 .replace("{ico_mail}", ico("mail"))
+                 .replace("{ico_wa}", ico("wa"))
+                 .replace("{EMAIL}", EMAIL)
+                 .replace("{WHATSAPP}", WHATSAPP))
     values = [
       ("hand",  "Hands on the hardware", "Nobody learns embedded systems from a slide deck. Every module ends with something on a bench that either works or doesn't."),
       ("users", "Nobody builds alone",   "Seniors teach juniors. The person who solved your bug last month is in the room. That loop is the whole community."),
@@ -935,8 +960,8 @@ def build_about():
           </div>
           <ul class="check-list">
             <li>{ico("check")}<span>Founded and operating from the University of Nigeria, Nsukka</span></li>
-            <li>{ico("check")}<span>Registered in Nigeria</span></li>
-            <li>{ico("check")}<span>Thirteen hardware systems designed, built or under active development</span></li>
+            <li>{ico("check")}<span>Registered in Nigeria &mdash; RC {RC}</span></li>
+            <li>{ico("check")}<span>Fourteen hardware systems designed, built or under active development</span></li>
             <li>{ico("check")}<span>Membership open to students across South-East Nigeria, free of charge</span></li>
           </ul>
         </div>
@@ -1005,14 +1030,10 @@ def build_about():
   <section class="section">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("users")} Leadership</span>
-        <h2>The people running it</h2>
-        <p class="lede">Portraits and names are placeholders &mdash; replace the images in
-          <code class="mono">assets/img/team/</code> and the names in this page.</p>
+        <span class="eyebrow">{ico("users")} Who runs it</span>
+        <h2>A solo founder and a community</h2>
       </div>
-      <div class="grid grid-3">
 {team_html}
-      </div>
     </div>
   </section>
 
@@ -1102,21 +1123,32 @@ def build_programs():
     body += f'''  <section class="section section--tight">
     <div class="container">
       <div class="bootcamp reveal">
+       <div class="bootcamp-grid">
+        <div>
         <span class="eyebrow">{ico("zap")} Free bootcamp &middot; open to everyone at UNN</span>
         <h2>Africa's Hardware Revolution</h2>
         <p class="theme-line">From Spark to Ignition</p>
         <p>Our next bootcamp is <strong>free and open to every student at the University of Nigeria,
            Nsukka</strong> — whatever you study, and whether or not you have ever touched a circuit. Come to
            learn, come to build something real, and come to be inspired.</p>
+        <p style="margin-top:.9rem"><strong>A hackathon runs inside it</strong> — with prizes to be revealed —
+           and a <strong>one-day hardware technology conference</strong> follows a few days later, where the
+           winners are announced.</p>
         <div class="bootcamp-facts">
           <span>{ico("check")} Completely free</span>
           <span>{ico("users")} Open to all UNN students</span>
           <span>{ico("tools")} Hardware supplied</span>
-          <span>{ico("book")} Starts at Module 01</span>
+          <span>{ico("award")} Hackathon prizes</span>
         </div>
         <div class="hero-cta">
-          <a class="btn btn--primary btn--lg" href="{WHATSAPP}" target="_blank" rel="noopener">{ico("wa")} Reserve your place</a>
+          <a class="btn btn--primary btn--lg" href="register.html">{ico("clipboard")} Register free</a>
         </div>
+        </div>
+        <div class="bootcamp-art">
+          <img src="assets/img/africa-circuit.svg"
+               alt="Africa drawn as a circuit board, with the lab at UNN Nsukka marked" width="330" height="377" loading="lazy">
+        </div>
+       </div>
       </div>
     </div>
   </section>
@@ -1265,9 +1297,9 @@ def build_programs():
       </div>
       <div class="grid grid-3">
 {mem_html}      </div>
-      <div class="callout mt-4">{ico("info")}<span><strong>On pricing:</strong> the levels above are structural
-        placeholders. If you intend to charge dues, sponsorship fees or bootcamp costs, set them here before
-        publishing — and make sure they match what you tell members in the community channel.</span></div>
+      <div class="callout mt-4">{ico("check")}<span><strong>Free for now.</strong> Every level above is free
+        of charge — membership, bootcamp seats and lab access. If that ever changes we will say so here first,
+        and in the community channel, well before it takes effect.</span></div>
     </div>
   </section>
 
@@ -1320,7 +1352,7 @@ def build_projects():
           <figcaption>{c}</figcaption>
         </figure>''' for f, c in GALLERY)
 
-    body = page_hero("chip", "Projects", "Thirteen systems, built by students on a bench in Nsukka.",
+    body = page_hero("chip", "Projects", "Fourteen systems, built by students on a bench in Nsukka.",
         "Every project here was designed, assembled, programmed and debugged by members. Some are finished and deployed; the rest are still pending on the bench.", "Projects")
 
     body += f'''  <section class="section">
@@ -1347,38 +1379,6 @@ def build_projects():
       </div>
       <div class="grid grid-3">
 {wip}
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
-    <div class="container">
-      <div class="split">
-        <div>
-          <span class="eyebrow">{ico("zap")} Flagship</span>
-          <h2 class="mt-2">Joint-Agent — Nigeria's first IoT-blockchain board</h2>
-          <div class="prose mt-2">
-            <p>Most IoT data is trustworthy only as far as the server holding it. Joint-Agent closes that
-               gap at the source: readings are signed on the board itself and committed on-chain, so a
-               measurement can be independently verified rather than simply believed.</p>
-            <p>It began as a capstone. The platform now runs under <strong>CNG Protect</strong>, our
-               cylinder-monitoring system for Nigeria's shift to compressed natural gas, which has shipped
-               and become a company of its own. The <strong>board and development kit are still in
-               build</strong> — that is the piece we are finishing now.</p>
-          </div>
-          <div class="tag-row mt-3">
-            <span class="tag tag--wip">Board in build</span>
-            <span class="tag">IoT</span><span class="tag">Blockchain</span>
-            <span class="tag">Embedded Firmware</span><span class="tag">Web3</span>
-          </div>
-          <div class="hero-cta" style="margin-top:1.4rem">
-            <a class="btn btn--ghost" href="https://jointagentide.com" target="_blank" rel="noopener">{ico("external")} jointagentide.com</a>
-            <a class="btn btn--ghost" href="https://cngprotect.com" target="_blank" rel="noopener">{ico("external")} cngprotect.com</a>
-          </div>
-        </div>
-        <figure class="reveal">
-          <img src="assets/img/gallery/joint-agent-kit.jpg" alt="The Joint-Agent IoT-blockchain board and development kit" loading="lazy" width="800" height="600">
-        </figure>
       </div>
     </div>
   </section>
@@ -1413,7 +1413,7 @@ def build_projects():
 
 '''
     write("projects.html", f"Projects — {ORG}",
-          "Thirteen hardware systems from our student members: the Joint-Agent IoT-blockchain board, solar power measurement, terrain-climbing robots, assistive tech and medical instrumentation.",
+          "Fourteen hardware systems from our student members: CNG Protect, the Joint-Agent IoT-blockchain board, solar power measurement, terrain-climbing robots, assistive tech and medical instrumentation.",
           body)
 
 
@@ -1658,6 +1658,7 @@ def build_contact():
             <h3>Company details</h3>
             <ul class="check-list" style="margin-top:.75rem">
               <li>{ico("check")}<span><strong>Registered name:</strong> {ORG}</span></li>
+              <li>{ico("check")}<span><strong>RC number:</strong> {RC}</span></li>
               <li>{ico("check")}<span><strong>Email:</strong> <a href="mailto:{EMAIL}" style="color:var(--accent)">{EMAIL}</a></span></li>
               <li>{ico("check")}<span><strong>Phone:</strong> <a href="tel:{PHONE_TEL}" style="color:var(--accent)">{PHONE}</a></span></li>
             </ul>
@@ -1710,6 +1711,12 @@ SKILL_LEVELS = ["Complete beginner — never built anything",
                 "Advanced — I work on hardware seriously"]
 
 def build_register():
+    events_html = "\n".join(f'''        <article class="card reveal" data-delay="{i*0.08:.2f}">
+          <div class="card-ico">{ico(k)}</div>
+          <h3>{title}</h3>
+          <p>{body}</p>
+          <p class="mono mt-2" style="font-size:.76rem;color:var(--accent)">{when}</p>
+        </article>''' for i, (k, title, body, when) in enumerate(EVENTS))
     tracks = "\n".join(f'''          <div class="track">
             <span class="t-ico">{ico(k)}</span><span>{label}</span>
           </div>''' for k, label in BOOTCAMP_TRACKS)
@@ -1744,6 +1751,20 @@ def build_register():
                alt="Attendees of a previous Ogbontor bootcamp at UNN Nsukka" width="800" height="600" fetchpriority="high">
           <figcaption>Our previous bootcamp &middot; UNN Nsukka</figcaption>
         </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--alt" id="events">
+    <div class="container">
+      <div class="sec-head sec-head--center">
+        <span class="eyebrow">{ico("calendar")} Three things, one programme</span>
+        <h2>It is more than a bootcamp</h2>
+        <p class="lede">A bootcamp, a hackathon inside it, and a one-day conference a few days later.
+          One registration covers whichever of them you want.</p>
+      </div>
+      <div class="grid grid-3">
+{events_html}
       </div>
     </div>
   </section>
@@ -1810,6 +1831,18 @@ def build_register():
             <div class="field">
               <label for="r-course">Course / department</label>
               <input class="input" id="r-course" name="Course" type="text" placeholder="Electrical Engineering">
+            </div>
+          </div>
+        </fieldset>
+
+        <fieldset class="fieldset">
+          <legend>What are you registering for?</legend>
+          <div class="field">
+            <label>Tick everything you want to attend <span class="req">*</span></label>
+            <div class="check-grid mt-1" data-require-one="events">
+              <label><input type="checkbox" name="events" value="Bootcamp" checked><span>Bootcamp</span></label>
+              <label><input type="checkbox" name="events" value="Hackathon" checked><span>Hackathon (during the bootcamp)</span></label>
+              <label><input type="checkbox" name="events" value="Conference" checked><span>Conference (one day, after)</span></label>
             </div>
           </div>
         </fieldset>
