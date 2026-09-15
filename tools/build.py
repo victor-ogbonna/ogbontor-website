@@ -298,11 +298,17 @@ def write(page, title, desc, body):
 # items 1-10 are the "Real-Life Projects" list, 11-13 the "in development" list,
 # and #6 is flagged "(in progress)" in the source. Images were matched to projects
 # from the module order, then confirmed by eye at full size.
+# A 5th element may carry extras: {"video", "link", "logo"}.
 PROJECTS_BUILT = [
+ ("CNG Protect", "A smart IoT-blockchain device that monitors compressed-natural-gas cylinders — pressure, integrity and custody — signed on the device and verifiable on chain. Now a company of its own.",
+  "gallery/cng-protect-module.jpg", ["IoT", "Blockchain", "Safety"],
+  {"link": "https://cngprotect.com", "logo": "companies/cng-protect.jpg", "logo_alt": "CNG Protect logo"}),
+ ("Joint-Agent IDE", "An autonomous agent for embedded development — it writes firmware, compiles, debugs and flashes real hardware from one browser tab. Spun out of this lab into its own product.",
+  "gallery/joint-agent-dashboard.jpg", ["Software", "Embedded", "AI Agent"],
+  {"link": "https://jointagentide.com", "logo": "companies/joint-agent.png", "logo_alt": "Joint-Agent logo"}),
  ("Line Following Robot", "The classic controls exercise done properly — sensor array, tuned PID loop, and a chassis the team built in-house. Press play to watch it track the line.",
-  "line-following-poster.jpg", ["Robotics", "Control", "PID"], "video/line-following-robot.mp4"),
- ("Joint-Agent", "Nigeria's first IoT-blockchain board and kit. Sensor readings are signed on the board and committed on chain, so field data arrives tamper-evident instead of merely reported.",
-  "gallery/joint-agent-kit.jpg", ["IoT", "Blockchain", "Firmware"]),
+  "line-following-poster.jpg", ["Robotics", "Control", "PID"],
+  {"video": "video/line-following-robot.mp4"}),
  ("Smart Solar Power Measurement System", "Measures and logs output across up to six solar panels at once, comparing passive fins, forced air and water cooling on a live rooftop deployment.",
   "gallery/solar-deployment-site.jpg", ["Energy", "Telemetry", "Sensors"]),
  ("Bluetooth Six-Wheel Terrain Climber", "A six-wheel rover driven over Bluetooth, built to keep traction and stay level on the broken ground around campus.",
@@ -320,12 +326,13 @@ PROJECTS_BUILT = [
 ]
 
 PROJECTS_WIP = [
+ ("Joint-Agent Board & IoT Kit", "The hardware side of Joint-Agent — Nigeria's first IoT-blockchain board and development kit, signing sensor readings on the board itself. In build.",
+  "gallery/joint-agent-kit.jpg", ["IoT", "Blockchain", "Hardware"],
+  {"logo": "companies/joint-agent.png", "logo_alt": "Joint-Agent logo"}),
  ("Robotic Arm — 6 Degrees of Freedom", "A six-axis arm with inverse kinematics and a teach-pendant workflow, intended as the teaching rig for our robotics tier.",
   "gallery/robotic-arm.jpg", ["Robotics", "Kinematics"]),
  ("Autonomous Self-Driving Vehicle", "A self-driving platform with an advanced computer-vision pipeline for lane keeping, obstacle classification and route planning.",
   "placeholders/autonomous-vehicle.svg", ["Computer Vision", "Autonomy", "Edge AI"]),
- ("CNG Protect", "A smart IoT-blockchain device for prompt monitoring and real-time decision-making on compressed-natural-gas cylinders, as Nigeria moves vehicles onto CNG.",
-  "placeholders/cng-protect.svg", ["IoT", "Blockchain", "Safety"]),
  ("Smart Electrocardiogram System", "A low-cost ECG front end with digital filtering, aimed at clinics that cannot justify imported equipment.",
   "placeholders/ecg-system.svg", ["Medical", "Signal Processing"]),
 ]
@@ -363,15 +370,22 @@ CURRICULUM = [
 
 def project_card(p, status):
     name, desc, img, tags = p[0], p[1], p[2], p[3]
-    video = p[4] if len(p) > 4 else None
+    extra = p[4] if len(p) > 4 and isinstance(p[4], dict) else {}
+    video, link, logo = extra.get("video"), extra.get("link"), extra.get("logo")
+
     tag_html = "".join(f'<span class="tag">{t}</span>' for t in tags)
     if video:
         tag_html = '<span class="tag tag--live">Video</span>' + tag_html
     badge = ('<span class="tag tag--live badge-float">Completed</span>' if status == "built"
              else '<span class="tag tag--wip badge-float">Pending</span>')
+
+    logo_html = ""
+    if logo:
+        logo_html = (f'<img class="project-logo" src="assets/img/{logo}" '
+                     f'alt="{extra.get("logo_alt", name + " logo")}" loading="lazy">')
+
     if video:
-        # preload="none" -> the browser fetches NOTHING until the visitor presses play.
-        # The only load cost is the poster, which doubles as the blurred backdrop.
+        # preload="none" -> nothing is fetched until the visitor presses play.
         media = f'''          <div class="project-media project-media--video">
             {badge}
             <img class="media-blur" src="assets/img/{img}" alt="" aria-hidden="true" loading="lazy">
@@ -384,16 +398,28 @@ def project_card(p, status):
     else:
         media = f'''          <div class="project-media">
             {badge}
+            {logo_html}
             <img src="assets/img/{img}" alt="{name}" loading="lazy" width="800" height="500">
           </div>'''
-    return f'''        <article class="project reveal">
+
+    if link:
+        # the whole card is a link out to the product's own site
+        title = (f'<h3><a class="project-out" href="{link}" target="_blank" rel="noopener">'
+                 f'{name} {ico("external")}</a></h3>')
+        cls = "project project--linked reveal"
+    else:
+        title = f"<h3>{name}</h3>"
+        cls = "project reveal"
+
+    return f'''        <article class="{cls}">
 {media}
           <div class="project-body">
-            <h3>{name}</h3>
+            {title}
             <p>{desc}</p>
             <div class="tag-row">{tag_html}</div>
           </div>
         </article>'''
+
 
 def stat(num, label, suffix="", prefix=""):
     return f'''        <div class="stat">
@@ -480,7 +506,7 @@ def build_home():
               <h2>Register now</h2>
               <p>Africa's Hardware Revolution &mdash; From Spark to Ignition. Open to every student, no fee.</p>
               <div class="slide-inset">
-                <img src="assets/img/gallery/bootcamp-lab.jpg" alt="Members at work during a previous bootcamp" loading="lazy">
+                <img src="assets/img/gallery/bootcamp-cohort-wide.jpg" alt="Members at work during a previous bootcamp" loading="lazy">
               </div>
               <a class="btn btn--lg" href="register.html">{ico("clipboard")} Register free</a>
             </div>
@@ -560,6 +586,8 @@ def build_home():
   <section class="section section--tight" id="bootcamp">
     <div class="container">
       <div class="bootcamp reveal">
+       <div class="bootcamp-grid">
+        <div>
         <span class="eyebrow">{ico("zap")} Free bootcamp &middot; open to everyone at UNN</span>
         <h2>Africa's Hardware Revolution</h2>
         <p class="theme-line">From Spark to Ignition</p>
@@ -580,6 +608,12 @@ def build_home():
           <a class="btn btn--primary btn--lg" href="register.html">{ico("clipboard")} Register free</a>
           <a class="btn btn--ghost btn--lg" href="programs.html#bootcamp">What you'll learn {ico("arrow")}</a>
         </div>
+        </div>
+        <div class="bootcamp-art">
+          <img src="assets/img/africa-circuit.svg"
+               alt="Africa drawn as a circuit board, with the lab at UNN Nsukka marked" width="330" height="362" loading="lazy">
+        </div>
+       </div>
       </div>
     </div>
   </section>
@@ -1293,14 +1327,19 @@ def build_projects():
             <p>Most IoT data is trustworthy only as far as the server holding it. Joint-Agent closes that
                gap at the source: readings are signed on the board itself and committed on-chain, so a
                measurement can be independently verified rather than simply believed.</p>
-            <p>It began as a capstone. It is now the platform behind <strong>CNG Protect</strong>, our
-               cylinder-monitoring system for Nigeria's shift to compressed natural gas, and the reference
-               design members use when a project needs verifiable field data.</p>
+            <p>It began as a capstone. The platform now runs under <strong>CNG Protect</strong>, our
+               cylinder-monitoring system for Nigeria's shift to compressed natural gas, which has shipped
+               and become a company of its own. The <strong>board and development kit are still in
+               build</strong> — that is the piece we are finishing now.</p>
           </div>
           <div class="tag-row mt-3">
-            <span class="tag tag--live">Built</span>
+            <span class="tag tag--wip">Board in build</span>
             <span class="tag">IoT</span><span class="tag">Blockchain</span>
             <span class="tag">Embedded Firmware</span><span class="tag">Web3</span>
+          </div>
+          <div class="hero-cta" style="margin-top:1.4rem">
+            <a class="btn btn--ghost" href="https://jointagentide.com" target="_blank" rel="noopener">{ico("external")} jointagentide.com</a>
+            <a class="btn btn--ghost" href="https://cngprotect.com" target="_blank" rel="noopener">{ico("external")} cngprotect.com</a>
           </div>
         </div>
         <figure class="reveal">
