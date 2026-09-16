@@ -976,3 +976,81 @@ p  { text-wrap: pretty; }
   .alert-bar p > svg { display: none; }
   .alert-bar a.alert-cta { font-size: .78rem; padding-inline: .8rem; }
 }
+
+/* ==========================================================================
+   Character layer — details borrowed from engineering drawings and datasheets,
+   so the page reads as something built by people who work on hardware.
+   ========================================================================== */
+
+/* ---------- Marquee: a live ticker of what actually gets built ---------- */
+.marquee {
+  --speed: 46s;
+  position: relative; overflow: hidden;
+  border-block: 1px solid var(--line);
+  background: var(--surface);
+  padding-block: .85rem;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+.marquee-track {
+  display: flex; width: max-content; gap: 0;
+  animation: marquee var(--speed) linear infinite;
+}
+.marquee:hover .marquee-track { animation-play-state: paused; }
+.marquee-group { display: flex; align-items: center; gap: 2.4rem; padding-right: 2.4rem; }
+.marquee-item {
+  display: inline-flex; align-items: center; gap: .55rem;
+  font-family: var(--font-mono); font-size: .76rem; font-weight: 600;
+  letter-spacing: .1em; text-transform: uppercase;
+  color: var(--text-muted); white-space: nowrap;
+}
+.marquee-item svg { width: 15px; height: 15px; color: var(--accent); flex: none; }
+.marquee-item::after {
+  content: ""; width: 4px; height: 4px; border-radius: 50%;
+  background: var(--accent); opacity: .5; margin-left: 2.4rem;
+}
+@keyframes marquee { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+  .marquee { -webkit-mask-image: none; mask-image: none; overflow-x: auto; }
+}
+
+/* ---------- Corner brackets: technical-drawing framing ---------- */
+.bracketed { position: relative; --bracket: var(--accent); }
+.bracketed::before, .bracketed::after {
+  content: ""; position: absolute; width: 16px; height: 16px; pointer-events: none; opacity: .6;
+}
+/* the colour must live in the shorthand: a bare `border-top: 2px solid` resets
+   the colour to currentColor and silently overrides any earlier border-color */
+.bracketed::before {
+  top: -1px; left: -1px; border-top-left-radius: 4px;
+  border-top: 2px solid var(--bracket); border-left: 2px solid var(--bracket);
+}
+.bracketed::after {
+  bottom: -1px; right: -1px; border-bottom-right-radius: 4px;
+  border-bottom: 2px solid var(--bracket); border-right: 2px solid var(--bracket);
+}
+/* on the deep-blue bootcamp panel the accent would vanish — use white there */
+.bootcamp.bracketed { --bracket: #fff; }
+
+/* ---------- Section index, like a spec sheet ---------- */
+.eyebrow .sec-no {
+  font-variant-numeric: tabular-nums;
+  opacity: .6; margin-right: .1rem;
+}
+.eyebrow .sec-no::after { content: " /"; opacity: .5; }
+
+/* ---------- Headline accent: a drawn underline, not a highlighter ---------- */
+.underline-accent { position: relative; white-space: nowrap; }
+.underline-accent::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -.08em; height: .22em;
+  background: var(--accent); opacity: .18; border-radius: 2px;
+  transform: skewX(-12deg);
+}
+
+/* ---------- Stat band: measurement ticks ---------- */
+.stat { position: relative; }
+.stat::before {
+  content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 30px; height: 2px; background: var(--grad); border-radius: 0 0 2px 2px;
+}

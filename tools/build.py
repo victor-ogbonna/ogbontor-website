@@ -461,6 +461,10 @@ def stat(num, label, suffix="", prefix=""):
 def build_home():
     _ext = ico("external")
     banner_tracks = "\n".join(f'          <span>{ico(k)} {label}</span>' for k, label in BOOTCAMP_TRACKS)
+    marquee_group = ('      <div class="marquee-group">\n'
+                     + "\n".join(f'        <span class="marquee-item">{ico(k)} {label}</span>'
+                                 for k, label in BOOTCAMP_TRACKS)
+                     + '\n      </div>')
     companies = "\n".join(f'''        <article class="company reveal" data-delay="{i*0.08:.2f}">
           <img class="company-logo" src="assets/img/companies/{slug}" alt="{name} logo" loading="lazy">
           <h3>{name}</h3>
@@ -476,10 +480,10 @@ def build_home():
         stat(1,  "Hardware lab at UNN Nsukka"),
     ])
     pillars = [
-      ("book",  "We train",     "A 19-module curriculum that runs from Ohm's law to FPGA design and edge AI — taught hands-on, with a board in front of you, not slides."),
-      ("wrench","We build",     "Members work on real prototypes from week one. Fourteen systems are on our bench so far, from assistive tech to grid instrumentation."),
-      ("rocket","We incubate",  "Capstone projects that prove themselves become products. We help members with patents, pitches, pilot users and company formation."),
-      ("globe", "We manufacture","The long game: hardware designed and assembled here in Enugu — consumer electronics, vehicles, instruments — instead of imported and repaired."),
+      ("book",  "We train",     "Nineteen modules, Ohm's law to FPGA design. Taught with a board in front of you, not slides."),
+      ("wrench","We build",     "Real prototypes from week one. Fourteen systems on the bench so far."),
+      ("rocket","We incubate",  "Capstones that prove themselves become products. We help with IP, pitches and pilot users."),
+      ("globe", "We manufacture","The long game: hardware designed and assembled in Enugu, not imported and repaired."),
     ]
     pillar_html = "\n".join(f'''        <article class="card reveal" data-delay="{i*0.07:.2f}">
           <div class="card-ico">{ico(k)}</div>
@@ -501,11 +505,11 @@ def build_home():
       <div class="hero-grid">
         <div>
           <span class="eyebrow">{ico("pin")} University of Nigeria, Nsukka &middot; Enugu State</span>
-          <h1>South-East Nigeria's <span class="grad-text">largest student hardware&nbsp;tech community</span>.</h1>
+          <h1>South-East Nigeria's <span class="grad-text">largest student hardware tech</span>
+            <span class="underline-accent">community</span>.</h1>
           <p class="lede">
-            {ORG} is where students stop reading about hardware and start building it.
-            Embedded systems, robotics, IoT and blockchain devices — designed, soldered, coded and
-            deployed by Nigerian students, from our lab in Nsukka.
+            Students here stop reading about hardware and start building it. Embedded systems,
+            robotics, IoT and blockchain devices — soldered, coded and deployed from our lab in Nsukka.
           </p>
           <div class="hero-cta">
             <a class="btn btn--primary btn--lg" href="{WHATSAPP}" target="_blank" rel="noopener">
@@ -570,14 +574,20 @@ def build_home():
     </div>
   </section>
 
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+{marquee_group}
+{marquee_group}
+    </div>
+  </div>
+
   <section class="section" id="equipment">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("tools")} Modern equipment for hardware tech</span>
+        <span class="eyebrow">{ico("tools")} <span class="sec-no">01</span> Modern equipment for hardware tech</span>
         <h2>Ideas do not stay on paper here</h2>
-        <p class="lede">A hardware community is only as good as the machines in the room. Ours prints
-          enclosures, jigs, mounts and brackets in-house — so a part designed on Monday can be in your hand
-          on Tuesday instead of waiting weeks on an import.</p>
+        <p class="lede">A community is only as good as the machines in the room. Design a part on Monday,
+          hold it on Tuesday — instead of waiting weeks on an import.</p>
       </div>
 
       <div class="video-stage reveal">
@@ -593,20 +603,19 @@ def build_home():
         <article class="card reveal">
           <div class="card-ico">{ico("layers")}</div>
           <h3>3D printing &amp; fabrication</h3>
-          <p>Enclosures, brackets, jigs and custom parts printed on site. Free for member projects, and
-             available as a paid service to students, researchers and businesses outside the community.</p>
+          <p>Enclosures, brackets, jigs, custom parts. Free for members, available to everyone else.</p>
         </article>
         <article class="card reveal" data-delay="0.08">
           <div class="card-ico">{ico("wrench")}</div>
           <h3>A bench that is actually equipped</h3>
-          <p>Soldering stations, measurement gear, dev boards and a component library — so a project stalls
-             on your thinking, not on your budget.</p>
+          <p>Soldering stations, measurement gear, dev boards, a component library. Your project stalls on
+             your thinking, not your budget.</p>
         </article>
         <article class="card reveal" data-delay="0.16">
           <div class="card-ico">{ico("rocket")}</div>
           <h3>Prototype to product</h3>
-          <p>Print it, test it, revise it, print it again. Fast iteration in-house is the difference between
-             a school project and something you can put in front of a user.</p>
+          <p>Print, test, revise, print again. Fast iteration is the difference between a school project and
+             a product.</p>
         </article>
       </div>
     </div>
@@ -614,20 +623,17 @@ def build_home():
 
   <section class="section section--tight" id="bootcamp">
     <div class="container">
-      <div class="bootcamp reveal">
+      <div class="bootcamp bracketed reveal">
        <div class="bootcamp-grid">
         <div>
-        <span class="eyebrow">{ico("zap")} Free bootcamp &middot; open to everyone at UNN</span>
+        <span class="eyebrow">{ico("zap")} <span class="sec-no">02</span> Free bootcamp &middot; open to everyone at UNN</span>
         <h2>Africa's Hardware Revolution</h2>
         <p class="theme-line">From Spark to Ignition</p>
-        <p>We are running a <strong>free hardware bootcamp for every student at the University of Nigeria,
-           Nsukka</strong>. No fee, no prior electronics experience, no particular course of study required.
-           Come to learn, come to build, and come to be inspired by what is already being made here.
-           Other selected universities across South-East Nigeria follow next &mdash; at least one in each state.</p>
-        <p style="margin-top:.9rem"><strong>It is more than a bootcamp.</strong> A hackathon runs inside it
-           &mdash; teams building against a brief, with prizes to be revealed &mdash; and a
-           <strong>one-day hardware technology conference</strong> follows a few days later, where the
-           hackathon winners are announced.</p>
+        <p><strong>Free. Open to every UNN student.</strong> No fee, no experience, no particular course.
+           Bring curiosity; we supply the bench, the boards and the people.</p>
+        <p style="margin-top:.8rem">A <strong>hackathon</strong> runs inside it. A <strong>one-day
+           conference</strong> follows, where the winners are crowned. Other South-East campuses next &mdash;
+           one per state.</p>
         <div class="bootcamp-facts">
           <span>{ico("check")} Completely free</span>
           <span>{ico("users")} Students &amp; individuals welcome</span>
@@ -662,11 +668,10 @@ def build_home():
   <section class="section section--alt">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("target")} What we do</span>
+        <span class="eyebrow">{ico("target")} <span class="sec-no">03</span> What we do</span>
         <h2>A community, a school, and a workshop — in one place</h2>
-        <p class="lede">Nigeria, and much of Africa, imports the technology it depends on. We think the
-          capacity to build it is already here; it has simply never been trained and equipped. That is the
-          gap {ORG_SHORT} exists to close.</p>
+        <p class="lede">Africa imports the technology it depends on. The capacity to build it is already
+          here — it has just never been trained or equipped. That is the gap we close.</p>
       </div>
       <div class="grid grid-4">
 {pillar_html}
@@ -677,10 +682,10 @@ def build_home():
   <section class="section">
     <div class="container">
       <div class="sec-head">
-        <span class="eyebrow">{ico("chip")} Selected work</span>
+        <span class="eyebrow">{ico("chip")} <span class="sec-no">04</span> Selected work</span>
         <h2>Hardware our members have actually shipped</h2>
-        <p class="lede">Not concepts or renders — boards that were populated, enclosures that were printed,
-          firmware that was flashed, and systems that ran outside the lab.</p>
+        <p class="lede">Not renders. Boards populated, enclosures printed, firmware flashed, systems run
+          outside the lab.</p>
       </div>
       <div class="grid grid-3">
 {featured}
@@ -695,11 +700,11 @@ def build_home():
     <div class="container">
       <div class="split">
         <div>
-          <span class="eyebrow">{ico("book")} The curriculum</span>
+          <span class="eyebrow">{ico("book")} <span class="sec-no">05</span> The curriculum</span>
           <h2 class="mt-2">Nineteen modules, five tiers, one straight line</h2>
-          <p class="lede mt-2">Most people who want to build hardware stall because nobody ever laid the path
-            out in order. Ours runs from your first resistor to CPU architecture and sensor fusion, with a
-            capstone that has to work in front of real users.</p>
+          <p class="lede mt-2">Most people stall because nobody laid the path out in order. Ours runs from
+            your first resistor to CPU architecture — ending in a capstone that has to work in front of real
+            users.</p>
           <ul class="modules mt-3" style="grid-template-columns:1fr; padding:0; background:none;">
 {tiers}
           </ul>
@@ -714,18 +719,17 @@ def build_home():
 
   <section class="section" id="siwes-teaser">
     <div class="container">
-      <div class="siwes-panel reveal">
+      <div class="siwes-panel bracketed reveal">
         <div class="siwes-grid">
           <div>
-            <span class="eyebrow">{ico("briefcase")} SIWES &amp; IT placements</span>
+            <span class="eyebrow">{ico("briefcase")} <span class="sec-no">06</span> SIWES &amp; IT placements</span>
             <h2 class="mt-2">Do your industrial training somewhere you actually build</h2>
-            <p class="lede mt-2">We host <strong>SIWES and IT students</strong> from universities,
-              polytechnics and colleges of education. You get a bench, a project team and a supervisor who
-              can assess the engineering you did — not a logbook you fill in at the end of the month.</p>
+            <p class="lede mt-2">A bench, a project team and a supervisor who can actually assess the
+              engineering you did — not a logbook you fill in at the end of the month.</p>
             <ul class="siwes-points">
               <li>{ico("check")}<span>Logbooks signed and ITF documentation handled properly.</span></li>
               <li>{ico("check")}<span>You join a real project team with a deliverable and a deadline.</span></li>
-              <li>{ico("check")}<span>Same curriculum our members take — embedded, robotics, IoT, PCB, CAD, edge AI.</span></li>
+              <li>{ico("check")}<span>The same curriculum our members take.</span></li>
             </ul>
             <a class="btn btn--primary mt-3" href="programs.html#siwes">
               {ico("briefcase")} More about SIWES &amp; IT placements {ico("arrow")}
@@ -750,11 +754,10 @@ def build_home():
     <div class="container">
       <div class="split split--flip">
         <div>
-          <span class="eyebrow">{ico("users")} The community</span>
+          <span class="eyebrow">{ico("users")} <span class="sec-no">07</span> The community</span>
           <h2 class="mt-2">You will not be building alone</h2>
           <p class="lede mt-2">The hardest part of hardware is the hour where nothing works and you have no
-            idea why. A community is what gets you through that hour — and ours is the largest of its kind in
-            South-East Nigeria.</p>
+            idea why. A community is what gets you through it.</p>
           <ul class="check-list">
             <li>{ico("check")}<span><strong>Weekly build nights</strong> — open lab, real benches, people to ask.</span></li>
             <li>{ico("check")}<span><strong>Cohort bootcamps</strong> — structured, intensive, and free to members.</span></li>
@@ -774,24 +777,23 @@ def build_home():
   <section class="section section--alt">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("rocket")} Where this is going</span>
+        <span class="eyebrow">{ico("rocket")} <span class="sec-no">08</span> Where this is going</span>
         <h2>Made in Enugu</h2>
-        <p class="lede">Our long-term objective is not a better robotics club. It is indigenous
-          capability — smartphones, televisions and consumer electronics designed here; vehicles, aircraft and
-          smart systems built for African roads, climate and culture rather than adapted from somewhere else.</p>
+        <p class="lede">Not a better robotics club. Indigenous capability — electronics, vehicles and smart
+          systems <em>designed</em> here, for African roads, climate and culture.</p>
       </div>
       <div class="grid grid-3">
         <figure class="project reveal" data-zoom>
           <div class="project-media"><img src="assets/img/gallery/made-in-enugu-factory.jpg" alt="Concept: an electronics assembly line operating in Enugu" loading="lazy" width="800" height="500"></div>
-          <div class="project-body"><h3>Consumer electronics</h3><p>Assembly and test lines staffed by engineers we trained ourselves.</p></div>
+          <div class="project-body"><h3>Consumer electronics</h3><p>Assembly lines staffed by engineers we trained.</p></div>
         </figure>
         <figure class="project reveal" data-delay="0.08" data-zoom>
           <div class="project-media"><img src="assets/img/gallery/made-in-enugu-automotive.jpg" alt="Concept: vehicle drivetrain assembly in Enugu" loading="lazy" width="800" height="500"></div>
-          <div class="project-body"><h3>Vehicles &amp; mobility</h3><p>Drivetrains and control systems designed for the roads we actually drive on.</p></div>
+          <div class="project-body"><h3>Vehicles &amp; mobility</h3><p>Drivetrains and controls for the roads we actually drive on.</p></div>
         </figure>
         <figure class="project reveal" data-delay="0.16" data-zoom>
           <div class="project-media"><img src="assets/img/gallery/made-in-enugu-aircraft.jpg" alt="Concept: aircraft maintenance and assembly in Enugu" loading="lazy" width="800" height="500"></div>
-          <div class="project-body"><h3>Aerospace &amp; heavy systems</h3><p>The far end of the roadmap — and the reason the curriculum goes as deep as it does.</p></div>
+          <div class="project-body"><h3>Aerospace &amp; heavy systems</h3><p>The far end of the roadmap — and why the curriculum goes so deep.</p></div>
         </figure>
       </div>
       <p class="center muted mt-3" style="font-size:.82rem">Illustrative concepts — these show the direction of the roadmap, not facilities currently in operation.</p>
@@ -801,10 +803,9 @@ def build_home():
   <section class="section" id="portfolio">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("rocket")} Portfolio companies</span>
+        <span class="eyebrow">{ico("rocket")} <span class="sec-no">09</span> Portfolio companies</span>
         <h2>What comes out the other end</h2>
-        <p class="lede">Capstones that prove themselves become products, and products become companies.
-          These two came out of this lab.</p>
+        <p class="lede">Capstones become products. Products become companies. These two came out of this lab.</p>
       </div>
       <div class="grid grid-2">
 {companies}
@@ -815,33 +816,33 @@ def build_home():
   <section class="section section--alt" id="sponsors">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("link")} Partners &amp; sponsors</span>
+        <span class="eyebrow">{ico("link")} <span class="sec-no">10</span> Partners &amp; sponsors</span>
         <h2>Become a sponsor</h2>
-        <p class="lede">After the campus bootcamp, we are organising <strong>the biggest hardware campus
-          bootcamp in South-East Nigeria</strong> — a gathering of over 800 attendees, with speakers from
-          across Nigeria and from around the world. We are looking for partners to help us build it.</p>
+        <p class="lede">The bootcamp is the start. Days later comes <strong>the biggest hardware technology
+          conference in South-East Nigeria</strong> — 800+ attendees, speakers from across Nigeria and around
+          the world, and the hackathon winners crowned on stage. Help us build it.</p>
       </div>
 
       <div class="grid grid-4">
         <article class="card reveal">
           <div class="card-ico">{ico("users")}</div>
           <h3>800+ attendees</h3>
-          <p>Students, makers and early-career engineers from campuses across South-East Nigeria, in one room.</p>
+          <p>Students, makers and early-career engineers from across the South-East, in one room.</p>
         </article>
         <article class="card reveal" data-delay="0.07">
           <div class="card-ico">{ico("globe")}</div>
           <h3>Speakers worldwide</h3>
-          <p>Practitioners from Nigeria and from around the world, talking about hardware people actually shipped.</p>
+          <p>Practitioners from Nigeria and worldwide, on hardware they actually shipped.</p>
         </article>
         <article class="card reveal" data-delay="0.14">
           <div class="card-ico">{ico("layers")}</div>
           <h3>Where your support goes</h3>
-          <p>Venue, components, printing, travel for speakers, and seats kept free for students who could not otherwise attend.</p>
+          <p>Venue, components, printing, speaker travel — and free seats for students who could not otherwise come.</p>
         </article>
         <article class="card reveal" data-delay="0.21">
           <div class="card-ico">{ico("target")}</div>
           <h3>What you get</h3>
-          <p>Branding across the event and this site, a stand on the floor, and first access to the people you want to hire.</p>
+          <p>Branding across the event and this site, a stand on the floor, first access to the people you want to hire.</p>
         </article>
       </div>
 
@@ -851,8 +852,8 @@ def build_home():
 
       <div class="sponsor-cta mt-3 reveal">
         <h3>This space is for your logo</h3>
-        <p>Sponsorship packages are open now — equipment, component budgets, speaker travel, internship
-          places or straightforward funding. Tell us what you have in mind and we will send the deck.</p>
+        <p>Equipment, component budgets, speaker travel, internships or funding. Tell us what you have in
+          mind and we will send the deck.</p>
         <div class="hero-cta" style="justify-content:center">
           <a class="btn btn--primary" href="mailto:{EMAIL}?subject=Sponsorship%20%E2%80%94%20Ogbontor%20hardware%20bootcamp">{ico("mail")} Become a sponsor</a>
           <a class="btn btn--ghost" href="contact.html">Talk to us first {ico("arrow")}</a>
@@ -863,11 +864,10 @@ def build_home():
 
   <section class="section">
     <div class="container">
-      <div class="cta-band reveal">
+      <div class="cta-band bracketed reveal">
         <span class="eyebrow">{ico("zap")} Open intake</span>
         <h2 class="mt-2">Our tomorrow is indeed here.</h2>
-        <p>Join the largest student hardware tech community in South-East Nigeria. Bring curiosity;
-          we will supply the bench, the boards and the people.</p>
+        <p>Bring curiosity. We supply the bench, the boards and the people.</p>
         <div class="hero-cta">
           <a class="btn btn--primary btn--lg" href="{WHATSAPP}" target="_blank" rel="noopener">{ico("wa")} Join on WhatsApp</a>
           <a class="btn btn--ghost btn--lg" href="contact.html">Talk to us first {ico("arrow")}</a>
@@ -904,13 +904,14 @@ def build_about():
           <div>
             <p class="founder-role">Founder</p>
             <h3>Victor Ogbonna</h3>
-            <p class="founder-bio">Ogbontor is run by one person and a community. I started it because the
-              capacity to build hardware in Nigeria is already here — what was missing was a bench, a
-              curriculum that goes deep enough to matter, and a room full of people working on the same
-              problem at the same time. Everything on this site came out of that room.</p>
+            <p class="founder-bio">I started Ogbontor because the capacity to build hardware in Nigeria is
+              already here. What was missing was a bench, a curriculum deep enough to matter, and a room full
+              of people working the same problem at the same time.</p>
+            <p class="founder-bio" style="margin-top:.8rem">Behind me is a solid team of hardware
+              professionals. <strong>We will introduce them shortly.</strong></p>
             <div class="founder-links">
-              <a class="btn btn--ghost" href="mailto:{EMAIL}">{{ico_mail}} Email me</a>
-              <a class="btn btn--ghost" href="{WHATSAPP}" target="_blank" rel="noopener">{{ico_wa}} Community</a>
+              <a class="btn btn--ghost" href="mailto:{EMAIL}">{ico_mail} Email me</a>
+              <a class="btn btn--ghost" href="{WHATSAPP}" target="_blank" rel="noopener">{ico_wa} Community</a>
             </div>
           </div>
         </article>'''
@@ -1047,7 +1048,7 @@ def build_about():
     <div class="container">
       <div class="sec-head sec-head--center">
         <span class="eyebrow">{ico("users")} Who runs it</span>
-        <h2>A solo founder and a community</h2>
+        <h2>The people behind it</h2>
       </div>
 {team_html}
     </div>
@@ -1055,7 +1056,7 @@ def build_about():
 
   <section class="section section--alt">
     <div class="container">
-      <div class="cta-band reveal">
+      <div class="cta-band bracketed reveal">
         <span class="eyebrow">{ico("wa")} Come and see</span>
         <h2 class="mt-2">The fastest way to understand us is to show up</h2>
         <p>Join the community channel, come to a build night, and watch what happens on the bench.</p>
@@ -1138,7 +1139,7 @@ def build_programs():
 
     body += f'''  <section class="section section--tight">
     <div class="container">
-      <div class="bootcamp reveal">
+      <div class="bootcamp bracketed reveal">
        <div class="bootcamp-grid">
         <div>
         <span class="eyebrow">{ico("zap")} Free bootcamp &middot; open to everyone at UNN</span>
@@ -1321,7 +1322,7 @@ def build_programs():
 
   <section class="section">
     <div class="container">
-      <div class="cta-band reveal">
+      <div class="cta-band bracketed reveal">
         <span class="eyebrow">{ico("book")} Intake is open</span>
         <h2 class="mt-2">Start at Module 01</h2>
         <p>You do not need prior electronics experience, a laptop of your own, or a particular course of
@@ -1414,7 +1415,7 @@ def build_projects():
 
   <section class="section">
     <div class="container">
-      <div class="cta-band reveal">
+      <div class="cta-band bracketed reveal">
         <span class="eyebrow">{ico("rocket")} Project teams</span>
         <h2 class="mt-2">Put your name on the next one</h2>
         <p>Members join project teams from the intermediate tier onward. The pending builds are taking
@@ -1578,7 +1579,7 @@ def build_community():
 
   <section class="section section--alt">
     <div class="container">
-      <div class="cta-band reveal">
+      <div class="cta-band bracketed reveal">
         <span class="eyebrow">{ico("wa")} Open intake</span>
         <h2 class="mt-2">Introduce yourself in the channel</h2>
         <p>That is the entire joining process. Scan the code or follow the link, say what you study and what
@@ -1914,7 +1915,7 @@ def build_register():
 
   <section class="section">
     <div class="container">
-      <div class="cta-band reveal">
+      <div class="cta-band bracketed reveal">
         <span class="eyebrow">{ico("users")} Questions first?</span>
         <h2 class="mt-2">Ask before you sign up</h2>
         <p>The community channel is the fastest way to reach us — ask anything about the bootcamp,
