@@ -849,12 +849,17 @@ p  { text-wrap: pretty; }
 @media (max-width: 939px) { .bootcamp-art { display: none; } }
 
 /* ---------- Project cards: product logo + outbound link ---------- */
-.project-logo {
+/* Specificity matters here: `.project-media img` sets width/height:100%, so the
+   badge needs to outrank it or it stretches to fill the whole card. */
+.project-media img.project-logo {
   position: absolute; bottom: .7rem; right: .7rem; z-index: 1;
-  width: 46px; height: 46px; border-radius: 12px; object-fit: cover;
-  background: #fff; border: 1px solid rgba(255,255,255,.7);
+  width: 46px; height: 46px; border-radius: 12px; object-fit: contain;
+  background: #fff; padding: 5px;
+  border: 1px solid rgba(255,255,255,.7);
   box-shadow: 0 6px 18px -6px rgba(3,10,24,.55);
 }
+/* the card's hover zoom must not grab the badge */
+.project:hover .project-media img.project-logo { transform: none; }
 .project-out {
   display: inline-flex; align-items: center; gap: .4rem;
   color: inherit; transition: color .18s;
