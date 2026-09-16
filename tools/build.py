@@ -118,6 +118,21 @@ NAV = [("index.html","Home"),("about.html","About"),("programs.html","Programs")
        ("projects.html","Projects"),("community.html","Community"),
        ("register.html","Register"),("contact.html","Contact")]
 
+
+def asset_v(path):
+    """Short content hash for cache-busting, so a redeploy never serves stale CSS/JS."""
+    import hashlib
+    full = os.path.join(ROOT, path)
+    try:
+        with open(full, "rb") as f:
+            return hashlib.sha1(f.read()).hexdigest()[:8]
+    except OSError:
+        return "0"
+
+CSS_V = asset_v("assets/css/styles.css")
+JS_V  = asset_v("assets/js/main.js")
+
+
 def head(title, desc, page):
     nav = "\n".join(f'          <a href="{h}">{l}</a>' for h, l in NAV)
     return f'''<!doctype html>
@@ -141,7 +156,8 @@ def head(title, desc, page):
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
-<link rel="stylesheet" href="assets/css/styles.css">
+<meta name="register-endpoint" content="{REGISTER_ENDPOINT}">
+<link rel="stylesheet" href="assets/css/styles.css?v={CSS_V}">
 <noscript><style>.reveal{{opacity:1!important;transform:none!important}}</style></noscript>
 <script type="application/ld+json">
 {{
@@ -293,7 +309,7 @@ FOOTER = f'''</main>
   </div>
 </div>
 
-<script src="assets/js/main.js"></script>
+<script src="assets/js/main.js?v={JS_V}"></script>
 </body>
 </html>
 '''

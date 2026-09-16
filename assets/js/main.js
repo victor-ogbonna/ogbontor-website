@@ -375,6 +375,70 @@
     });
   });
 
+
+  /* ---------- Pre-warm the registration endpoint ----------
+     Apps Script has no process running between requests: the first call after a
+     quiet spell pays ~30s of container start-up, Sheets binding and auth. But
+     there is always a gap between someone heading for the form and submitting
+     it. We use that gap — a cheap GET on intent wakes the container so the real
+     POST lands on a warm one.
+
+     Fired on: hovering or tapping any link to the register page, and on the
+     register page itself (load, first interaction, then a slow heartbeat while
+     the form is being filled in). Throttled so it can never spam the quota. */
+  (function () {
+    var meta = document.querySelector('meta[name="register-endpoint"]');
+    var endpoint = meta ? (meta.getAttribute("content") || "").trim() : "";
+    if (!endpoint) return;
+
+    var MIN_GAP = 45000;     // never warm more than once every 45s
+    var HEARTBEAT = 90000;   // while filling the form
+    var MAX_WARMS = 12;      // hard ceiling per page view
+    var last = 0, count = 0, beat = null;
+
+    function warm() {
+      var now = Date.now();
+      if (count >= MAX_WARMS || now - last < MIN_GAP) return;
+      last = now; count++;
+      try {
+        // no-cors: we do not need the reply, only the wake-up. Errors are
+        // irrelevant here — this is best-effort and must never surface.
+        fetch(endpoint, { method: "GET", mode: "no-cors", cache: "no-store" })
+          .catch(function () {});
+      } catch (e) {}
+    }
+
+    // 1. Intent: someone is heading for the register page
+    var seen = false;
+    function onIntent() {
+      if (seen) return;
+      seen = true;
+      warm();
+    }
+    document.querySelectorAll('a[href*="register"]').forEach(function (a) {
+      a.addEventListener("pointerenter", onIntent, { once: true, passive: true });
+      a.addEventListener("focus", onIntent, { once: true });
+      a.addEventListener("pointerdown", warm, { passive: true });
+    });
+
+    // 2. On the register page itself
+    var form = document.querySelector("form[data-register]");
+    if (!form) return;
+
+    warm();                                   // they have arrived — wake it now
+    form.addEventListener("focusin", warm);   // and again once they start typing
+
+    function stopBeat() { if (beat) { clearInterval(beat); beat = null; } }
+    beat = setInterval(function () {
+      // only keep it warm while the tab is actually in front of someone
+      if (!document.hidden) warm();
+      if (count >= MAX_WARMS) stopBeat();
+    }, HEARTBEAT);
+
+    form.addEventListener("submit", stopBeat);
+    window.addEventListener("pagehide", stopBeat);
+  })();
+
   /* ---------- Footer year ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();

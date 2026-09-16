@@ -46,8 +46,20 @@ function doPost(e) {
   }
 }
 
+/**
+ * The website calls this with a plain GET the moment someone heads for the
+ * registration form. That wakes the container AND binds the Sheets service, so
+ * the POST that follows a minute later lands warm instead of paying ~30s of
+ * cold start. Touching the sheet is the point — do not "optimise" it away.
+ */
 function doGet() {
-  return json({ result: 'ok', message: 'Ogbontor registration endpoint is live.' });
+  var rows = -1;
+  try {
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+    var sheet = ss.getSheetByName(SHEET_NAME) || ss.insertSheet(SHEET_NAME);
+    rows = sheet.getLastRow();            // cheap call, forces the Sheets bind
+  } catch (e) {}
+  return json({ result: 'ok', message: 'Ogbontor registration endpoint is live.', rows: rows });
 }
 
 function json(obj) {

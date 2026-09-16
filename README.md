@@ -237,6 +237,25 @@ around **8 seconds**. The form is built for that:
 - if the response cannot be read, one fire-and-forget `no-cors` retry (the row still lands)
 - only if that fails does it fall back to opening the visitor's email client
 
+### Pre-warming (why submissions are fast)
+
+Apps Script keeps no process between requests, so the first call after a quiet spell pays ~30s of
+container start-up. The site works around that: a cheap `GET` is fired **the moment someone shows
+intent to register** — hovering or tapping any register link, landing on the form page, and on a
+slow heartbeat while they fill it in. By the time the `POST` arrives the container is warm.
+
+`doGet` deliberately touches the sheet (`getLastRow()`), because that is what binds the Sheets
+service — the expensive half of a cold start. **Do not "optimise" that line away.**
+
+The warm-up is throttled: at most one call per 45s, 12 per page view, and it pauses when the tab is
+in the background.
+
+### Cache-busting
+
+`styles.css` and `main.js` are linked with a content hash (`?v=672680fc`). Change either file and
+the hash changes, so a returning visitor can never be left running stale CSS or JS after a deploy.
+The hash is computed at build time by `asset_v()` in `tools/build.py`.
+
 ### What gets captured
 
 Name, email, phone, status, institution, course, **which events they are attending**, tracks of
