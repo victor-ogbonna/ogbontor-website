@@ -38,7 +38,7 @@
   --pad: clamp(1.15rem, 4vw, 2.5rem);
 
   --font: "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-  --font-display: "Space Grotesk", var(--font);
+  --font-display: "Sora", "Space Grotesk", var(--font);
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   --header-h: 68px;
@@ -95,11 +95,14 @@ button, input, textarea, select { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
 ::selection { background: var(--accent); color: #fff; }
 
-/* ---------- Type ---------- */
-h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 700; line-height: 1.14; letter-spacing: -.02em; text-wrap: balance; }
-h1 { font-size: clamp(2.2rem, 6vw, 4rem); }
-h2 { font-size: clamp(1.65rem, 3.6vw, 2.6rem); }
-h3 { font-size: clamp(1.05rem, 1.8vw, 1.3rem); }
+/* ---------- Type ----------
+   Headings carry the page. They are set heavy (800), tight, and a shade larger
+   than the old scale so a visitor can skim the site by its titles alone.      */
+h1,h2,h3,h4 { font-family: var(--font-display); font-weight: 800; line-height: 1.06; letter-spacing: -.035em; text-wrap: balance; }
+h1 { font-size: clamp(2.3rem, 5.4vw, 3.9rem); }
+h2 { font-size: clamp(1.9rem, 4.1vw, 3rem); }
+h3 { font-size: clamp(1.1rem, 1.9vw, 1.38rem); letter-spacing: -.025em; }
+h4 { letter-spacing: -.02em; }
 p  { text-wrap: pretty; }
 .lede { font-size: clamp(1rem, 1.7vw, 1.16rem); color: var(--text-muted); line-height: 1.75; }
 .grad-text { background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent; }
@@ -1043,8 +1046,8 @@ p  { text-wrap: pretty; }
 /* ---------- Headline accent: a drawn underline, not a highlighter ---------- */
 .underline-accent { position: relative; white-space: nowrap; }
 .underline-accent::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -.08em; height: .22em;
-  background: var(--accent); opacity: .18; border-radius: 2px;
+  content: ""; position: absolute; left: 0; right: 0; bottom: .02em; height: .14em;
+  background: var(--grad); opacity: .5; border-radius: 2px;
   transform: skewX(-12deg);
 }
 
@@ -1054,3 +1057,316 @@ p  { text-wrap: pretty; }
   content: ""; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 30px; height: 2px; background: var(--grad); border-radius: 0 0 2px 2px;
 }
+
+/* ==========================================================================
+   Futuristic layer — cyber / mechatronic motion graphics and the surfaces
+   that hold them.
+
+   Every animation here is a CSS keyframe with its rest pose on 0%/100%, so
+   the prefers-reduced-motion rule at the top of this file freezes the whole
+   set on a sensible frame rather than mid-swing.
+   ========================================================================== */
+
+/* ---------- Shared ---------- */
+.mg { display: block; width: 100%; height: auto; color: var(--accent); }
+.mg--act { width: auto; max-width: 100%; height: clamp(130px, 14vw, 168px); margin-inline: auto; }
+@keyframes mgSpin    { from { transform: rotate(0deg);   } to { transform: rotate(360deg);  } }
+@keyframes mgSpinRev { from { transform: rotate(0deg);   } to { transform: rotate(-360deg); } }
+
+/* ---------- Circuit backdrop ----------
+   A board fanned out behind the page: static copper, pads that blink, and
+   data running the routes.                                                  */
+.mg-circuit { position: absolute; inset: 0; width: 100%; height: 100%; color: var(--accent); }
+.mgc-trace { fill: none; stroke: currentColor; stroke-width: 1.15; opacity: .17; }
+.mgc-pad {
+  fill: var(--ink); stroke: currentColor; stroke-width: 1.4;
+  transform-box: fill-box; transform-origin: center;
+  animation: mgcPad 3.6s ease-in-out infinite;
+}
+@keyframes mgcPad {
+  0%, 100% { opacity: .22; transform: scale(.82); }
+  50%      { opacity: .75; transform: scale(1.18); }
+}
+.mgc-pulse {
+  fill: none; color: var(--cyan); stroke: currentColor;
+  stroke-width: 2.4; stroke-linecap: round;
+  stroke-dasharray: 74 4000; stroke-dashoffset: 0;
+  filter: drop-shadow(0 0 7px currentColor);
+  animation-name: mgcPulse; animation-timing-function: linear; animation-iteration-count: infinite;
+}
+@keyframes mgcPulse {
+  0%        { stroke-dashoffset: 0;     opacity: 0; }
+  7%        { opacity: 1; }
+  86%       { opacity: 1; }
+  100%      { stroke-dashoffset: -1620; opacity: 0; }
+}
+.mgc-chip { opacity: .2; animation: mgcBreathe 6.5s ease-in-out infinite; }
+.mgc-chip rect { fill: none; stroke: currentColor; stroke-width: 1.3; }
+.mgc-chip .mgc-die { fill: currentColor; fill-opacity: .18; }
+.mgc-pin { fill: none; stroke: currentColor; stroke-width: 1.2; }
+@keyframes mgcBreathe { 0%, 100% { opacity: .16; } 50% { opacity: .42; } }
+
+/* ---------- Mechatronic arm ---------- */
+.mg-arm { color: var(--accent); overflow: visible; }
+.mga-hud path  { fill: none; stroke: currentColor; stroke-width: 1.6; opacity: .3; }
+.mga-floor     { fill: none; stroke: currentColor; stroke-width: 1.4; opacity: .28; }
+.mga-floor--2  { opacity: .14; }
+.mga-board       { fill: currentColor; fill-opacity: .14; stroke: currentColor; stroke-width: 1.3; }
+.mga-board-trace { fill: none; stroke: var(--cyan); stroke-width: 1.6; stroke-linecap: round; opacity: .8; }
+.mga-base, .mga-column { fill: currentColor; fill-opacity: .16; stroke: currentColor; stroke-width: 1.6; }
+.mga-limb {
+  fill: var(--surface-2); stroke: currentColor; stroke-width: 1.8;
+  filter: drop-shadow(0 0 10px var(--accent-soft));
+}
+.mga-limb-line { fill: none; stroke: var(--cyan); stroke-width: 1.6; stroke-linecap: round; opacity: .55; }
+.mga-joint  { fill: var(--surface-2); stroke: currentColor; stroke-width: 2; }
+.mga-joint--base { stroke-width: 2.4; }
+.mga-jaw    { fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+.mga-payload{ fill: var(--cyan); fill-opacity: .3; stroke: var(--cyan); stroke-width: 1.5; }
+.mga-beam   { fill: none; stroke: var(--cyan); stroke-width: 1.4; stroke-dasharray: 3 5; opacity: 0; }
+
+.mga-shoulder { transform-box: view-box; transform-origin: 186px 224px; animation: mgaShoulder 8s cubic-bezier(.45,.02,.35,1) infinite; }
+.mga-fore     { transform-box: view-box; transform-origin: 186px 130px; animation: mgaFore     8s cubic-bezier(.45,.02,.35,1) infinite; }
+@keyframes mgaShoulder {
+  0%, 6%    { transform: rotate(-20deg); }
+  32%, 44%  { transform: rotate(26deg); }
+  70%, 100% { transform: rotate(-20deg); }
+}
+@keyframes mgaFore {
+  0%, 6%    { transform: rotate(34deg); }
+  32%, 44%  { transform: rotate(-22deg); }
+  70%, 100% { transform: rotate(34deg); }
+}
+.mga-jaw--l { transform-box: view-box; animation: mgaJawL 8s ease-in-out infinite; }
+.mga-jaw--r { transform-box: view-box; animation: mgaJawR 8s ease-in-out infinite; }
+@keyframes mgaJawL { 0%, 18% { transform: none; } 30%, 38% { transform: translateX(-5px); } 50%, 100% { transform: none; } }
+@keyframes mgaJawR { 0%, 18% { transform: none; } 30%, 38% { transform: translateX(5px);  } 50%, 100% { transform: none; } }
+.mga-payload { animation: mgaPayload 8s linear infinite; }
+@keyframes mgaPayload { 0%, 40% { opacity: 0; } 48%, 86% { opacity: 1; } 94%, 100% { opacity: 0; } }
+.mga-beam { animation: mgaBeam 8s linear infinite; }
+@keyframes mgaBeam { 0%, 24% { opacity: 0; } 32%, 42% { opacity: .9; } 50%, 100% { opacity: 0; } }
+.mga-spark circle { fill: var(--cyan); opacity: 0; animation: mgaSpark 8s ease-out infinite; }
+.mga-spark circle:nth-child(2) { animation-delay: .18s; }
+.mga-spark circle:nth-child(3) { animation-delay: .34s; }
+@keyframes mgaSpark {
+  0%, 30% { opacity: 0; transform: none; }
+  36%     { opacity: .95; }
+  46%     { opacity: 0; transform: translate(6px, -14px); }
+  100%    { opacity: 0; transform: none; }
+}
+
+/* ---------- Gear train ---------- */
+.mg-gears { color: var(--accent); }
+.mgg-body  { fill: currentColor; fill-opacity: .1; stroke: currentColor; stroke-width: 1.7; stroke-linejoin: round; }
+.mgg-hub   { fill: none; stroke: currentColor; stroke-width: 1.6; opacity: .75; }
+.mgg-bore  { fill: var(--cyan); fill-opacity: .35; stroke: var(--cyan); stroke-width: 1.4; }
+.mgg-spokes circle { fill: var(--ink); stroke: currentColor; stroke-width: 1.3; opacity: .55; }
+.mgg-hud path { fill: none; stroke: var(--cyan); stroke-width: 1.8; opacity: .5; }
+.mgg { transform-box: view-box; }
+.mgg--cw           { transform-origin: 112px 112px; animation: mgSpin    16s linear infinite; }
+.mgg--ccw.mgg--fast{ transform-origin: 206px 148px; animation: mgSpinRev 13s linear infinite; }
+.mgg--ccw.mgg--slow{ transform-origin:  98px 216px; animation: mgSpinRev 18s linear infinite; }
+
+/* ---------- Chip core ---------- */
+.mg-core { color: var(--accent); }
+.mgk-bus    { fill: none; stroke: currentColor; stroke-width: 1.3; opacity: .22; }
+.mgk-packet {
+  fill: none; color: var(--cyan); stroke: currentColor; stroke-width: 3; stroke-linecap: round;
+  stroke-dasharray: 16 600; filter: drop-shadow(0 0 6px currentColor);
+  animation: mgkPacket 2.6s linear infinite;
+}
+@keyframes mgkPacket {
+  0%   { stroke-dashoffset: 0;    opacity: 0; }
+  12%  { opacity: 1; }
+  82%  { opacity: 1; }
+  100% { stroke-dashoffset: -180; opacity: 0; }
+}
+.mgk-ring {
+  fill: none; stroke: currentColor; stroke-width: 1.6;
+  transform-box: view-box; transform-origin: 160px 160px;
+  animation: mgkRing 3.3s ease-out infinite;
+}
+@keyframes mgkRing {
+  0%   { transform: scale(.6);  opacity: 0; }
+  16%  { opacity: .65; }
+  100% { transform: scale(1.95); opacity: 0; }
+}
+.mgk-orbit-path { fill: none; stroke: currentColor; stroke-width: 1; opacity: .16; }
+.mgk-orbit { transform-box: view-box; transform-origin: 160px 160px; animation: mgSpin 9s linear infinite; }
+.mgk-orbit--rev { animation: mgSpinRev 14s linear infinite; }
+.mgk-orbit circle { fill: var(--cyan); filter: drop-shadow(0 0 6px var(--cyan)); }
+.mgk-die       { fill: var(--surface-2); stroke: currentColor; stroke-width: 2; }
+.mgk-die-inner { fill: currentColor; fill-opacity: .1; stroke: currentColor; stroke-width: 1.3; }
+.mgk-die-grid  { fill: none; stroke: currentColor; stroke-width: .9; opacity: .4; }
+.mgk-spark {
+  fill: var(--cyan); transform-box: view-box; transform-origin: 160px 160px;
+  filter: drop-shadow(0 0 10px var(--cyan)); animation: mgkSpark 2.2s ease-in-out infinite;
+}
+@keyframes mgkSpark { 0%, 100% { transform: scale(.72); opacity: .55; } 50% { transform: scale(1.15); opacity: 1; } }
+
+/* ---------- Oscilloscope ---------- */
+.mg-wave { color: var(--accent); }
+.mgw-grid  { fill: none; stroke: currentColor; stroke-width: .8; opacity: .15; }
+.mgw-trace {
+  fill: none; color: var(--cyan); stroke: currentColor; stroke-width: 2.2;
+  stroke-linecap: round; stroke-linejoin: round;
+  filter: drop-shadow(0 0 6px currentColor);
+  stroke-dasharray: 900; animation: mgwDraw 5s ease-in-out infinite;
+}
+@keyframes mgwDraw { 0% { stroke-dashoffset: 900; } 55%, 100% { stroke-dashoffset: 0; } }
+.mgw-scan {
+  fill: none; stroke: var(--cyan); stroke-width: 2; opacity: .55;
+  transform-box: view-box; animation: mgwScan 5s linear infinite;
+}
+@keyframes mgwScan { 0% { transform: translateX(0); } 100% { transform: translateX(420px); } }
+
+/* ---------- Radar ---------- */
+.mg-radar { color: var(--accent); }
+.mgr-ring  { fill: none; stroke: currentColor; stroke-width: 1.2; opacity: .3; }
+.mgr-cross { fill: none; stroke: currentColor; stroke-width: 1; opacity: .18; }
+.mgr-sweep { transform-box: view-box; transform-origin: 120px 120px; animation: mgSpin 4.6s linear infinite; }
+.mgr-edge  { fill: none; stroke: var(--cyan); stroke-width: 2; opacity: .8; }
+.mgr-blips circle { fill: var(--cyan); filter: drop-shadow(0 0 7px var(--cyan)); animation: mgrBlip 4.6s ease-out infinite; }
+@keyframes mgrBlip { 0% { opacity: 1; } 55%, 100% { opacity: .12; } }
+
+/* ---------- Hero backdrop: perspective floor, scanlines, aurora ---------- */
+.hero-floor {
+  position: absolute; left: -30%; right: -30%; bottom: -8%; height: 52%;
+  background-image: linear-gradient(var(--accent-line) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--accent-line) 1px, transparent 1px);
+  background-size: 68px 68px;
+  transform: perspective(320px) rotateX(66deg);
+  transform-origin: bottom center;
+  mask-image: linear-gradient(to top, #000 0%, transparent 86%);
+  -webkit-mask-image: linear-gradient(to top, #000 0%, transparent 86%);
+  opacity: .45;
+  animation: floorRun 7s linear infinite;
+}
+@keyframes floorRun { from { background-position: 0 0, 0 0; } to { background-position: 0 68px, 0 0; } }
+.scanlines {
+  position: absolute; inset: 0; opacity: .5;
+  background: repeating-linear-gradient(to bottom,
+              color-mix(in srgb, var(--accent) 7%, transparent) 0 1px, transparent 1px 5px);
+  mask-image: radial-gradient(ellipse 110% 70% at 50% 10%, #000 20%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse 110% 70% at 50% 10%, #000 20%, transparent 80%);
+}
+.scanlines::after {
+  content: ""; position: absolute; inset-inline: 0; top: -180px; height: 180px;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--cyan) 22%, transparent), transparent);
+  animation: scanRun 9s cubic-bezier(.45,0,.55,1) infinite;
+}
+@keyframes scanRun { 0% { top: -180px; } 100% { top: 100%; } }
+.backdrop-circuit { opacity: .55; }
+.backdrop-circuit--sm { opacity: .4; }
+
+/* ---------- Holo frame ---------- */
+.holo-frame {
+  position: relative; border-radius: var(--r-lg); overflow: hidden;
+  padding: clamp(.6rem, 2vw, 1.1rem);
+  border: 1px solid color-mix(in srgb, currentColor 26%, transparent);
+  background: color-mix(in srgb, var(--ink) 10%, transparent);
+}
+.holo-frame > img { position: relative; z-index: 1; margin-inline: auto; }
+.holo-circuit { opacity: .3; }
+.holo-sweep {
+  position: absolute; inset-inline: 0; height: 40%; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, transparent, color-mix(in srgb, var(--cyan) 30%, transparent), transparent);
+  animation: holoSweep 6s ease-in-out infinite;
+}
+@keyframes holoSweep { 0% { top: -40%; } 60%, 100% { top: 110%; } }
+.bootcamp .mg { color: #fff; }
+.bootcamp .mgc-pad { fill: #063A93; }
+.bootcamp .holo-frame { border-color: rgba(255,255,255,.28); }
+
+/* ---------- The programme rail ---------- */
+.prog-rail {
+  list-style: none; padding: 0; margin: clamp(1.8rem, 4vw, 2.8rem) 0 0;
+  display: grid; gap: clamp(1rem, 2.2vw, 1.5rem);
+}
+@media (min-width: 920px) { .prog-rail { grid-template-columns: repeat(3, 1fr); column-gap: clamp(1.5rem, 3vw, 2.6rem); } }
+.prog-act {
+  position: relative; display: grid; gap: 1.1rem; align-content: start;
+  padding: clamp(1.25rem, 2.6vw, 1.9rem);
+  border: 1px solid var(--line); border-radius: var(--r-lg);
+  background:
+    radial-gradient(120% 80% at 50% 0%, var(--accent-soft), transparent 62%),
+    var(--surface-2);
+  transition: transform .25s cubic-bezier(.2,.8,.3,1), border-color .25s, box-shadow .25s;
+}
+.prog-act::before {
+  content: ""; position: absolute; left: 14%; right: 14%; top: -1px; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--accent), var(--cyan), transparent);
+  opacity: .8;
+}
+.prog-act:hover { transform: translateY(-5px); border-color: var(--accent-line); box-shadow: var(--shadow-lg); }
+/* the energy line linking one act to the next */
+@media (min-width: 920px) {
+  .prog-act:not(:last-child)::after {
+    content: ""; position: absolute; z-index: 3; top: 50%; left: 100%;
+    width: clamp(1.5rem, 3vw, 2.6rem); height: 2px;
+    background: linear-gradient(90deg, var(--accent-line), transparent);
+  }
+  .prog-rail { position: relative; }
+}
+.prog-art { position: relative; display: grid; place-items: center; padding-block: .4rem; }
+.prog-num {
+  position: absolute; top: 0; left: 0;
+  font-family: var(--font-mono); font-weight: 700; font-size: .72rem; letter-spacing: .18em;
+  color: var(--accent); background: var(--accent-soft);
+  border: 1px solid var(--accent-line); border-radius: 999px; padding: .26rem .6rem;
+}
+.prog-when {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--font-mono); font-size: .66rem; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase; color: var(--cyan);
+}
+.prog-when svg { width: 13px; height: 13px; flex: none; }
+.prog-body h3 { margin-top: .6rem; }
+.prog-body p  { margin-top: .6rem; font-size: .93rem; color: var(--text-muted); }
+.prog-chips { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: 1rem; }
+.prog-chips span {
+  font-family: var(--font-mono); font-size: .64rem; font-weight: 600;
+  letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
+  border: 1px solid var(--line-2); border-radius: 999px; padding: .3rem .6rem;
+}
+
+/* ---------- Heading & chrome polish ---------- */
+.sec-no {
+  color: var(--cyan); font-weight: 700;
+  padding-right: .3rem; border-right: 1px solid currentColor; margin-right: .2rem;
+}
+[data-theme="dark"] .grad-text { filter: drop-shadow(0 0 22px rgba(92,155,255,.35)); }
+.btn--primary:hover { box-shadow: 0 14px 44px -10px color-mix(in srgb, var(--accent) 62%, transparent); }
+.stat-num { font-weight: 800; letter-spacing: -.04em; }
+.brand-name { font-weight: 800; }
+
+/* A light sheen that crosses a card on hover — cheap, and it reads as glass. */
+.card::after, .project::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: linear-gradient(115deg, transparent 38%, color-mix(in srgb, var(--accent) 12%, transparent) 50%, transparent 62%);
+  transform: translateX(-120%); transition: transform .7s cubic-bezier(.2,.8,.3,1);
+}
+.card:hover::after, .project:hover::after { transform: translateX(120%); }
+
+/* The tech marquee reads as a data bus rather than a list of words. */
+.marquee { position: relative; }
+.marquee::before, .marquee::after {
+  content: ""; position: absolute; inset-inline: 0; height: 1px; z-index: 2;
+  background: linear-gradient(90deg, transparent, var(--accent-line), var(--cyan), var(--accent-line), transparent);
+}
+.marquee::before { top: 0; } .marquee::after { bottom: 0; }
+
+/* The closing band gets the board behind it, so the last thing on the page is
+   still moving. The band already clips and positions itself further up. */
+.cta-band > *:not(.cta-circuit) { z-index: 1; }
+.cta-circuit { opacity: .35; }
+
+/* ---------- Motion-graphic strips ---------- */
+.mg-strip {
+  position: relative; border: 1px solid var(--line); border-radius: var(--r-lg);
+  background: var(--surface-2); overflow: hidden; padding: .4rem .8rem;
+}
+.mg-strip { margin-bottom: clamp(1rem, 2.2vw, 1.5rem); }
+.mg-strip .mg-wave { width: 100%; height: 84px; }
+.mg-inline { max-width: 240px; margin-inline: auto; }
+.mg-inline--sm { max-width: 132px; margin-bottom: .9rem; opacity: .85; }

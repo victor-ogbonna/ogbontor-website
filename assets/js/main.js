@@ -439,6 +439,60 @@
     window.addEventListener("pagehide", stopBeat);
   })();
 
+  /* ---------- HUD decrypt ----------
+     One pass over a short mono label so the page reads like it is coming up
+     on a terminal. Only ever runs on [data-scramble], only once, and the
+     final text is already in the DOM so nothing is lost if this never runs. */
+  (function () {
+    if (reduceMotion) return;
+    var GLYPHS = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/\\<>#*+";
+    document.querySelectorAll("[data-scramble]").forEach(function (el) {
+      var final = el.textContent, frame = 0;
+      var settle = final.split("").map(function (_, i) { return 4 + i * 1.1; });
+      var id = setInterval(function () {
+        var out = "";
+        for (var i = 0; i < final.length; i++) {
+          if (final[i] === " " || frame >= settle[i]) out += final[i];
+          else out += GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        }
+        el.textContent = out;
+        if (frame++ > settle[settle.length - 1]) { clearInterval(id); el.textContent = final; }
+      }, 38);
+    });
+  })();
+
+  /* ---------- Backdrop parallax ----------
+     The circuit field and the floor grid drift against the pointer. Pure
+     transform, rAF-throttled, and skipped entirely on touch and on
+     reduced-motion. */
+  (function () {
+    if (reduceMotion || !window.matchMedia("(pointer: fine)").matches) return;
+    var hero = document.querySelector(".hero .backdrop");
+    if (!hero) return;
+    var layers = [
+      { el: hero.querySelector(".mg-circuit"), depth: 14 },
+      { el: hero.querySelector(".hero-floor"), depth: -22 },
+      { el: hero.querySelector(".grid-lines"), depth: 7 }
+    ].filter(function (l) { return l.el; });
+    if (!layers.length) return;
+
+    var tx = 0, ty = 0, queued = false;
+    function paint() {
+      queued = false;
+      layers.forEach(function (l) {
+        var base = l.el.classList.contains("hero-floor")
+          ? "perspective(320px) rotateX(66deg) " : "";
+        l.el.style.transform = base + "translate3d(" + (tx * l.depth).toFixed(2) + "px," +
+                               (ty * l.depth).toFixed(2) + "px,0)";
+      });
+    }
+    window.addEventListener("pointermove", function (e) {
+      tx = (e.clientX / window.innerWidth) - 0.5;
+      ty = (e.clientY / window.innerHeight) - 0.5;
+      if (!queued) { queued = true; requestAnimationFrame(paint); }
+    }, { passive: true });
+  })();
+
   /* ---------- Footer year ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();

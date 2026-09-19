@@ -11,3 +11,7 @@ Thumbs.db
 # source media kept outside the published site
 assets/*.mp4
 assets/OGBONTOR_logo.png
+
+# python bytecode
+__pycache__/
+*.pyc
