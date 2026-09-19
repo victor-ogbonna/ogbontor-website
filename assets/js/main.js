@@ -97,7 +97,7 @@
         if (t0 === null) t0 = ts;
         var p = Math.min((ts - t0) / dur, 1);
         var eased = 1 - Math.pow(1 - p, 3);
-        var val = target < 10 ? (target * eased).toFixed(1) : Math.round(target * eased);
+        var val = target % 1 ? (target * eased).toFixed(1) : Math.round(target * eased);
         el.textContent = prefix + val + suffix;
         if (p < 1) requestAnimationFrame(step);
       };

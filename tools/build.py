@@ -246,16 +246,6 @@ def mg_core(cls=""):
 </svg>'''
 
 
-def mg_wave(cls=""):
-    """Oscilloscope trace with a sweeping graticule bar. The timebase stretches
-       to the strip it sits in, so the stroke is pinned with non-scaling-stroke."""
-    ve = 'vector-effect="non-scaling-stroke"'
-    return f'''<svg class="mg mg-wave {cls}" viewBox="0 0 420 120" preserveAspectRatio="none"
-     aria-hidden="true" focusable="false">
-  <path class="mgw-grid" {ve} d="M0 30h420M0 60h420M0 90h420M60 0v120M120 0v120M180 0v120M240 0v120M300 0v120M360 0v120"/>
-  <path class="mgw-trace" {ve} d="M0 60h34l10-30 10 60 12-46 10 16h30l12-34 10 52 12-30 10 12h44l10-40 10 64 12-40 10 4h34l12-26 10 44 12-30 10 12h58"/>
-  <path class="mgw-scan" {ve} d="M0 0v120"/>
-</svg>'''
 
 
 def mg_radar(cls=""):
@@ -892,7 +882,6 @@ def build_home():
 
   <section class="section section--tight">
     <div class="container">
-      <div class="mg-strip reveal" aria-hidden="true">{mg_wave()}</div>
       <div class="stats reveal">
 {stats}
       </div>
