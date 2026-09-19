@@ -300,6 +300,19 @@ EVENTS = [
 
 PROGRAMME_LINE = "Conference first. Then three weeks on the bench."
 
+# The month is confirmed; the day and the venue are not. Say both together
+# everywhere, so nobody reads "November" as a full date.
+EVENT_MONTH = "November"
+EVENT_WHEN_NOTE = "Exact dates &amp; venue announced soon"
+
+
+def date_plate(cls=""):
+    """The month, set loud, with the honest caveat sitting next to it."""
+    return f'''<div class="when-plate {cls}">
+          <span class="when-month">{EVENT_MONTH}</span>
+          <span class="when-note">{ico("calendar")} {EVENT_WHEN_NOTE}</span>
+        </div>'''
+
 
 def programme_rail():
     """The three acts as one connected rail, each with its own motion graphic.
@@ -451,7 +464,7 @@ def head(title, desc, page):
     <p>
       {ico("megaphone")}
       <span class="pill">Registration open</span>
-      <strong>Conference, then a 3-week bootcamp</strong>
+      <strong>{EVENT_MONTH} &mdash; conference, then a 3-week bootcamp</strong>
       <span class="alert-tagline">&mdash; Africa's Hardware Revolution: From Spark to Ignition</span>
     </p>
     <a class="alert-cta" href="register.html">Register free {ico("arrow")}</a>
@@ -849,6 +862,7 @@ def build_home():
         <span class="eyebrow">{ico("zap")} <span class="sec-no">02</span> The programme &middot; free, open to all</span>
         <h2>Africa's Hardware Revolution</h2>
         <p class="theme-line">From Spark to Ignition</p>
+        {date_plate()}
         <p class="lede">{PROGRAMME_LINE} A hackathon closes it.</p>
         <div class="bootcamp-facts">
           <span>{ico("check")} No fee</span>
@@ -1362,6 +1376,7 @@ def build_programs():
         <span class="eyebrow">{ico("zap")} The programme &middot; free, open to all</span>
         <h2>Africa's Hardware Revolution</h2>
         <p class="theme-line">From Spark to Ignition</p>
+        {date_plate()}
         <p class="lede">{PROGRAMME_LINE} A hackathon closes it.</p>
         <p>Free, and open to every student at UNN Nsukka — whatever you study, whether or not you
            have ever touched a circuit.</p>
@@ -1961,11 +1976,12 @@ def build_register():
           <span class="free-badge">{ico("check")} Free of charge</span>
           <h1 class="mt-2">Africa's Hardware Revolution</h1>
           <p class="theme-line" style="font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,2.2vw,1.35rem);color:var(--accent);margin-top:.5rem">From Spark to Ignition</p>
+          {date_plate("when-plate--lg")}
           <p class="lede">A one-day conference, then three weeks on the bench. Free, at UNN Nsukka, open
             to anyone who wants to build.</p>
-          <div class="callout mt-3">{ico("pin")}<span><strong>This run is at UNN Nsukka.</strong>
-            Other South-East universities are next — at least one per state. Register anyway and we will
-            tell you when we reach yours.</span></div>
+          <div class="callout mt-3">{ico("pin")}<span><strong>This run is at UNN Nsukka in
+            {EVENT_MONTH}.</strong> We will send you the exact dates and the venue as soon as they are
+            fixed. Other South-East universities are next — at least one per state.</span></div>
           <div class="hero-cta">
             <a class="btn btn--primary btn--lg" href="#register-form">{ico("clipboard")} Register now</a>
             <a class="btn btn--ghost btn--lg" href="#covers">What it covers {ico("arrow")}</a>
@@ -1983,7 +1999,7 @@ def build_register():
   <section class="section section--alt" id="events">
     <div class="container">
       <div class="sec-head sec-head--center">
-        <span class="eyebrow">{ico("calendar")} Three acts, one programme</span>
+        <span class="eyebrow">{ico("calendar")} Three acts, one programme &middot; {EVENT_MONTH}</span>
         <h2>{PROGRAMME_LINE}</h2>
         <p class="lede">One registration covers all three. Tick only what you want.</p>
       </div>
@@ -2135,7 +2151,7 @@ def build_register():
 
 '''
     write("register.html", f"Register — Free Conference &amp; 3-Week Hardware Bootcamp — {ORG}",
-          "Register free for Africa's Hardware Revolution: From Spark to Ignition — a one-day hardware conference at UNN Nsukka followed by a free three-week bootcamp in robotics, embedded systems, IoT, PCB design, CAD, edge AI and 3D printing.",
+          "Register free for Africa's Hardware Revolution: From Spark to Ignition — a one-day hardware conference at UNN Nsukka this November, followed by a free three-week bootcamp in robotics, embedded systems, IoT, PCB design, CAD, edge AI and 3D printing. Exact dates and venue announced soon.",
           body)
 
 

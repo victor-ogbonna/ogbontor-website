@@ -274,6 +274,15 @@ Edit (pencil) -> Version: New version -> Deploy.** The URL stays the same.
 
 ---
 
+## The month
+
+`EVENT_MONTH` and `EVENT_WHEN_NOTE` in `tools/build.py` hold the month and the caveat. `date_plate()`
+renders them together as one block, so "November" can never appear on the site without "exact dates
+& venue announced soon" next to it. It is used on the home and programs programme banners and in the
+register hero; the alert bar and the register meta description pull `EVENT_MONTH` directly.
+
+---
+
 ## The three acts
 
 The programme runs in order: a **one-day conference** opens it, a **three-week bootcamp** follows,
@@ -365,9 +374,10 @@ These are placeholders or assumptions, deliberately flagged rather than invented
 - **Leadership names** (`about.html`) — all six read "Your Name Here".
 - **Email address** — the site uses `victorogbonna313@gmail.com`. Change `EMAIL` in
   `tools/build.py` if you move to a dedicated Ogbontor address.
-- **Programme dates** — the conference and the three-week bootcamp are announced on the home and
-  programs pages under the theme *Africa's Hardware Revolution — From Spark to Ignition*, but
-  **no date or venue is given**. Add them before publishing.
+- **Programme dates** — the month is confirmed and set in `EVENT_MONTH` in `tools/build.py`
+  (**November**); the exact days and the venue are not, and every place the month appears carries
+  `EVENT_WHEN_NOTE` beside it saying so. When the dates and venue are fixed, change those two
+  constants and rebuild — the alert bar, both programme banners and the register page follow.
 - **The 800-attendee event** — described as planned, not as something that has happened. Keep that
   framing until it has.
 - **Membership numbers** — the stat band deliberately shows only verifiable figures (projects,

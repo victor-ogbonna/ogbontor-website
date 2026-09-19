@@ -1356,6 +1356,47 @@ p  { text-wrap: pretty; }
 }
 .marquee::before { top: 0; } .marquee::after { bottom: 0; }
 
+/* ---------- The month ----------
+   November is confirmed, the day and the venue are not. The plate sets the
+   month loud and keeps the caveat beside it, never on its own line where it
+   could be skimmed past. */
+.when-plate {
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; flex-wrap: wrap; gap: .45rem 1rem;
+  margin-top: 1.15rem; padding: .72rem 1.05rem;
+  border: 1px solid var(--accent-line); border-radius: var(--r);
+  background: var(--accent-soft);
+}
+.when-plate::before {
+  content: ""; position: absolute; inset-block: 0; left: -40%; width: 38%;
+  background: linear-gradient(90deg, transparent,
+              color-mix(in srgb, var(--cyan) 18%, transparent), transparent);
+  animation: plateSweep 6s ease-in-out infinite;
+}
+@keyframes plateSweep { 0% { left: -40%; } 62%, 100% { left: 110%; } }
+.when-plate > * { position: relative; z-index: 1; }
+.when-month {
+  font-family: var(--font-display); font-weight: 800; line-height: 1;
+  font-size: clamp(1.65rem, 3.7vw, 2.4rem);
+  letter-spacing: -.015em; text-transform: uppercase; color: var(--accent);
+}
+.when-note {
+  display: inline-flex; align-items: center; gap: .45rem;
+  font-family: var(--font-mono); font-size: .67rem; font-weight: 700;
+  letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
+}
+.when-note svg { width: 13px; height: 13px; flex: none; color: var(--cyan); }
+.when-plate--lg { margin-top: 1.4rem; }
+.when-plate--lg .when-month {
+  font-size: clamp(2rem, 4.8vw, 3.1rem);
+  background: var(--grad-text); -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+/* on the blue programme banner the plate inverts */
+.bootcamp .when-plate { background: rgba(255,255,255,.13); border-color: rgba(255,255,255,.26); }
+.bootcamp .when-month { color: #fff; }
+.bootcamp .when-note { color: #CFE0FA; }
+.bootcamp .when-note svg { color: #9FD9E8; }
+
 /* The closing band gets the board behind it, so the last thing on the page is
    still moving. The band already clips and positions itself further up. */
 .cta-band > *:not(.cta-circuit) { z-index: 1; }
