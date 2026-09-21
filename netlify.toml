@@ -22,7 +22,7 @@
 
 # Link-preview crawlers (WhatsApp, X, Facebook) must always see the current card.
 [[headers]]
-  for = "/assets/img/og-image.*"
+  for = "/assets/img/link-preview.jpg"
   [headers.values]
     Cache-Control = "public, max-age=3600, must-revalidate"
 

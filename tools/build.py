@@ -168,15 +168,15 @@ def head(title, desc, page):
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{canon}">
-<meta property="og:image" content="{SITE_URL}/assets/img/og-image.png">
-<meta property="og:image:secure_url" content="{SITE_URL}/assets/img/og-image.png">
-<meta property="og:image:type" content="image/png">
+<meta property="og:image" content="{SITE_URL}/assets/img/link-preview.jpg">
+<meta property="og:image:secure_url" content="{SITE_URL}/assets/img/link-preview.jpg">
+<meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{ORG} — South-East Nigeria's largest student hardware tech community">
 <meta property="og:locale" content="en_NG">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{SITE_URL}/assets/img/og-image.png">
+<meta name="twitter:image" content="{SITE_URL}/assets/img/link-preview.jpg">
 <meta name="twitter:image:alt" content="{ORG}">
 <meta name="author" content="{ORG}">
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
@@ -200,7 +200,7 @@ def head(title, desc, page):
   "alternateName": "Ogbontor",
   "url": "{SITE_URL}/",
   "logo": "{SITE_URL}/assets/img/logo.png",
-  "image": "{SITE_URL}/assets/img/og-image.png",
+  "image": "{SITE_URL}/assets/img/link-preview.jpg",
   "description": "The largest student hardware tech community in South-East Nigeria — training students in embedded systems, robotics, IoT and blockchain hardware.",
   "email": "{EMAIL}",
   "telephone": "{PHONE_TEL}",
@@ -243,7 +243,7 @@ def head(title, desc, page):
   "isAccessibleForFree": true,
   "inLanguage": "en-NG",
   "url": "{SITE_URL}/register.html",
-  "image": "{SITE_URL}/assets/img/og-image.png",
+  "image": "{SITE_URL}/assets/img/link-preview.jpg",
   "location": {{
     "@type": "Place",
     "name": "University of Nigeria, Nsukka",
