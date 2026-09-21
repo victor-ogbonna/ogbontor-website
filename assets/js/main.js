@@ -439,6 +439,92 @@
     window.addEventListener("pagehide", stopBeat);
   })();
 
+
+  /* ---------- Orientation: progress bar, section rail, "you are here" ----------
+     A long page with no landmarks is disorienting. This gives three cues at
+     once: how far down you are, which section you are in, and what is next. */
+  (function () {
+    var main = document.getElementById("main");
+    if (!main) return;
+
+    // every section that carries a heading is a landmark worth naming
+    // Only h2 sections are landmarks. The hero carries the h1, and echoing that
+    // back in the header while the visitor is looking straight at it is noise.
+    var sections = Array.prototype.slice.call(main.querySelectorAll("section"))
+      .map(function (el) {
+        var h = el.querySelector("h2");
+        if (!h || el.querySelector("h1")) return null;
+        var name = h.textContent.trim();
+        return { el: el, name: name.length > 34 ? name.slice(0, 32).trim() + "…" : name };
+      })
+      .filter(Boolean);
+
+    /* --- progress bar --- */
+    var bar = document.createElement("div");
+    bar.className = "scroll-progress";
+    document.body.appendChild(bar);
+
+    /* --- rail (wide screens) --- */
+    var rail = null;
+    if (sections.length > 2) {
+      rail = document.createElement("nav");
+      rail.className = "rail";
+      rail.setAttribute("aria-label", "Sections on this page");
+      sections.forEach(function (s, i) {
+        if (!s.el.id) s.el.id = "sec-" + (i + 1);
+        var a = document.createElement("a");
+        a.href = "#" + s.el.id;
+        var short = s.name.length > 26 ? s.name.slice(0, 24).trim() + "…" : s.name;
+        a.innerHTML = '<span class="rail-label"></span><span class="rail-tick"></span>';
+        a.querySelector(".rail-label").textContent = short;
+        a.setAttribute("title", s.name);
+        rail.appendChild(a);
+        s.link = a;
+      });
+      document.body.appendChild(rail);
+    }
+
+    /* --- "you are here" in the header --- */
+    var here = null;
+    var brand = document.querySelector(".site-header .brand");
+    if (brand && brand.parentNode) {
+      here = document.createElement("span");
+      here.className = "here";
+      here.setAttribute("aria-live", "polite");
+      brand.parentNode.insertBefore(here, brand.nextSibling);
+    }
+
+    var current = -1;
+    function paint() {
+      var doc = document.documentElement;
+      var max = doc.scrollHeight - doc.clientHeight;
+      var pct = max > 0 ? window.scrollY / max : 0;
+      bar.style.transform = "scaleX(" + Math.min(1, Math.max(0, pct)) + ")";
+
+      // the section occupying the upper third of the viewport is "where you are"
+      var line = window.innerHeight * 0.33, best = -1;
+      for (var i = 0; i < sections.length; i++) {
+        if (sections[i].el.getBoundingClientRect().top <= line) best = i;
+      }
+      if (best !== current) {
+        current = best;
+        sections.forEach(function (s, i) {
+          if (s.link) s.link.classList.toggle("is-current", i === best);
+        });
+        if (here) here.textContent = best >= 0 ? sections[best].name : "";
+      }
+    }
+
+    var ticking = false;
+    window.addEventListener("scroll", function () {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(function () { paint(); ticking = false; });
+    }, { passive: true });
+    window.addEventListener("resize", paint, { passive: true });
+    paint();
+  })();
+
   /* ---------- Footer year ---------- */
   document.querySelectorAll("[data-year]").forEach(function (el) {
     el.textContent = new Date().getFullYear();

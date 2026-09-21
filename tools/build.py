@@ -89,17 +89,32 @@ def ico(name, cls=""):
 
 
 EVENTS = [
- ("book",  "The bootcamp",
-  "Hands-on sessions across all eleven tracks at UNN Nsukka. Free, hardware supplied, no prior experience needed.",
-  "Free &middot; several days"),
- ("zap",   "The hackathon",
-  "Runs inside the bootcamp. Teams build against a brief, and there are prizes — we will reveal them shortly.",
-  "During the bootcamp"),
  ("award", "The conference",
-  "A one-day hardware technology conference a few days after the bootcamp, with talks and demos. Hackathon winners are announced here.",
-  "One day &middot; after the bootcamp"),
+  "A mega hardware technology conference opens the programme — talks, demos and speakers from across Nigeria and around the world.",
+  "Opens the programme"),
+ ("book",  "Three weeks of bootcamp",
+  "Intensive, hands-on sessions across all eleven tracks at UNN Nsukka. Free, hardware supplied, no prior experience needed.",
+  "Three weeks &middot; free"),
+ ("zap",   "The hackathon",
+  "Teams build against a brief to close the programme, with prizes to be revealed.",
+  "Closes the programme"),
 ]
 
+
+# The people, beyond the founder. Bios stay short on purpose.
+TEAM = [
+ ("Theophilus Edafe", "CAD Engineer", "theophilus-edafe.jpg",
+  "Turns ideas into working prototypes. Helps startups and innovators develop, refine and 3D-print "
+  "physical products — CAD, mechanical design, embedded systems and hands-on fabrication."),
+ ("Bright Okonkwo", "Full-Stack Embedded Systems Engineer", "bright-okonkwo.jpg",
+  "Works the whole stack of a connected device — firmware on the microcontroller, the protocols "
+  "carrying its data, and the services that receive it. Comfortable from register level to cloud."),
+ ("Elsie Iloene", "Full-Stack Software Developer", "elsie-iloene.jpg",
+  "Builds the software our hardware needs to be useful — dashboards, APIs and interfaces that turn "
+  "raw sensor output into something a person can act on."),
+]
+
+BOOTCAMP_MONTH = "November 2026"
 BOOTCAMP_TRACKS = [
  ("bot",     "Robotics"),
  ("cpu",     "Embedded Systems"),
@@ -150,7 +165,19 @@ def head(title, desc, page):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{SITE_URL}/{page}">
 <meta property="og:image" content="{SITE_URL}/assets/img/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="{ORG} — South-East Nigeria's largest student hardware tech community">
+<meta property="og:locale" content="en_NG">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{SITE_URL}/assets/img/og-image.png">
+<meta name="twitter:image:alt" content="{ORG}">
+<meta name="author" content="{ORG}">
+<meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
+<meta name="geo.region" content="NG-EN">
+<meta name="geo.placename" content="Nsukka, Enugu State, Nigeria">
+<meta name="geo.position" content="6.8567;7.3958">
+<meta name="ICBM" content="6.8567, 7.3958">
 <link rel="icon" href="assets/img/favicon.png" type="image/png">
 <link rel="apple-touch-icon" href="assets/img/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -182,7 +209,57 @@ def head(title, desc, page):
     "addressCountry": "NG"
   }},
   "areaServed": "South-East Nigeria",
+  "foundingLocation": "Nsukka, Enugu State, Nigeria",
+  "knowsAbout": ["Embedded Systems", "Robotics", "Internet of Things", "PCB Design",
+                 "Edge AI", "Blockchain Hardware", "3D Printing", "CAD", "Fabrication"],
   "sameAs": ["{WHATSAPP}"]
+}}
+</script>
+<script type="application/ld+json">
+{{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "{ORG}",
+  "url": "{SITE_URL}/",
+  "inLanguage": "en-NG",
+  "publisher": {{ "@type": "Organization", "name": "{ORG}" }}
+}}
+</script>
+<script type="application/ld+json">
+{{
+  "@context": "https://schema.org",
+  "@type": "EducationEvent",
+  "name": "Africa's Hardware Revolution: From Spark to Ignition",
+  "description": "A mega hardware technology conference at the University of Nigeria, Nsukka, followed by three weeks of intensive free bootcamp covering robotics, embedded systems, IoT, PCB design, CAD, IoT-blockchain, edge AI, 3D printing and fabrication, closing with a hackathon.",
+  "startDate": "2026-11",
+  "eventStatus": "https://schema.org/EventScheduled",
+  "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+  "isAccessibleForFree": true,
+  "inLanguage": "en-NG",
+  "url": "{SITE_URL}/register.html",
+  "image": "{SITE_URL}/assets/img/og-image.png",
+  "location": {{
+    "@type": "Place",
+    "name": "University of Nigeria, Nsukka",
+    "address": {{
+      "@type": "PostalAddress",
+      "streetAddress": "1 Lion Science Park Road, University of Nigeria",
+      "addressLocality": "Nsukka",
+      "postalCode": "410002",
+      "addressRegion": "Enugu State",
+      "addressCountry": "NG"
+    }}
+  }},
+  "organizer": {{ "@type": "Organization", "name": "{ORG}", "url": "{SITE_URL}/" }},
+  "offers": {{
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "NGN",
+    "availability": "https://schema.org/InStock",
+    "url": "{SITE_URL}/register.html",
+    "validFrom": "2026-09-01"
+  }},
+  "audience": {{ "@type": "EducationalAudience", "educationalRole": "student" }}
 }}
 </script>
 
@@ -230,8 +307,8 @@ def head(title, desc, page):
   <div class="container">
     <p>
       {ico("megaphone")}
-      <span class="pill">Registration open</span>
-      <strong>Free bootcamp, hackathon &amp; conference</strong>
+      <span class="pill">November 2026</span>
+      <strong>Free conference, 3-week bootcamp &amp; hackathon</strong>
       <span class="alert-tagline">&mdash; Africa's Hardware Revolution: From Spark to Ignition</span>
     </p>
     <a class="alert-cta" href="register.html">Register free {ico("arrow")}</a>
@@ -631,10 +708,12 @@ def build_home():
         <p class="theme-line">From Spark to Ignition</p>
         <p><strong>Free. Open to every UNN student.</strong> No fee, no experience, no particular course.
            Bring curiosity; we supply the bench, the boards and the people.</p>
-        <p style="margin-top:.8rem">A <strong>hackathon</strong> runs inside it. A <strong>one-day
-           conference</strong> follows, where the winners are crowned. Other South-East campuses next &mdash;
-           one per state.</p>
+        <p class="programme-line" style="margin-top:1rem"><strong>A Mega Hardware Conference this
+           November</strong>, followed by <strong>3 weeks of intensive practical hardware bootcamp</strong>
+           and a <strong>hackathon</strong>.</p>
+        <p style="margin-top:.8rem;font-size:.9rem;opacity:.85">Other South-East campuses next — one per state.</p>
         <div class="bootcamp-facts">
+          <span>{ico("calendar")} November 2026</span>
           <span>{ico("check")} Completely free</span>
           <span>{ico("users")} Students &amp; individuals welcome</span>
           <span>{ico("pin")} University of Nigeria, Nsukka</span>
@@ -818,9 +897,9 @@ def build_home():
       <div class="sec-head sec-head--center">
         <span class="eyebrow">{ico("link")} <span class="sec-no">10</span> Partners &amp; sponsors</span>
         <h2>Become a sponsor</h2>
-        <p class="lede">The bootcamp is the start. Days later comes <strong>the biggest hardware technology
-          conference in South-East Nigeria</strong> — 800+ attendees, speakers from across Nigeria and around
-          the world, and the hackathon winners crowned on stage. Help us build it.</p>
+        <p class="lede">It opens with <strong>the biggest hardware technology conference in South-East
+          Nigeria</strong> — 800+ attendees, speakers from across Nigeria and around the world — then three
+          weeks of bootcamp and a hackathon. Help us build it.</p>
       </div>
 
       <div class="grid grid-4">
@@ -907,14 +986,21 @@ def build_about():
             <p class="founder-bio">I started Ogbontor because the capacity to build hardware in Nigeria is
               already here. What was missing was a bench, a curriculum deep enough to matter, and a room full
               of people working the same problem at the same time.</p>
-            <p class="founder-bio" style="margin-top:.8rem">Behind me is a solid team of hardware
-              professionals. <strong>We will introduce them shortly.</strong></p>
+            <p class="founder-bio" style="margin-top:.8rem">Behind me is a team of hardware professionals —
+              and more of them join as the lab grows.</p>
             <div class="founder-links">
               <a class="btn btn--ghost" href="mailto:{EMAIL}">{ico_mail} Email me</a>
               <a class="btn btn--ghost" href="{WHATSAPP}" target="_blank" rel="noopener">{ico_wa} Community</a>
             </div>
           </div>
         </article>'''
+
+    crew_html = "\n".join(f'''        <article class="person reveal" data-delay="{i*0.07:.2f}">
+          <img src="assets/img/team/{photo}" alt="{name}, {role} at {ORG}" loading="lazy" width="400" height="400">
+          <h3>{name}</h3>
+          <p>{role}</p>
+          <p class="person-bio">{bio}</p>
+        </article>''' for i, (name, role, photo, bio) in enumerate(TEAM))
 
     team_html = (team_html
                  .replace("{ico_mail}", ico("mail"))
@@ -1051,6 +1137,10 @@ def build_about():
         <h2>The people behind it</h2>
       </div>
 {team_html}
+
+      <div class="grid grid-3 mt-4">
+{crew_html}
+      </div>
     </div>
   </section>
 
@@ -1148,13 +1238,13 @@ def build_programs():
         <p>Our next bootcamp is <strong>free and open to every student at the University of Nigeria,
            Nsukka</strong> — whatever you study, and whether or not you have ever touched a circuit. Come to
            learn, come to build something real, and come to be inspired.</p>
-        <p style="margin-top:.9rem"><strong>A hackathon runs inside it</strong> — with prizes to be revealed —
-           and a <strong>one-day hardware technology conference</strong> follows a few days later, where the
-           winners are announced.</p>
+        <p class="programme-line" style="margin-top:1rem"><strong>A Mega Hardware Conference this
+           November</strong>, followed by <strong>3 weeks of intensive practical hardware bootcamp</strong>
+           and a <strong>hackathon</strong>.</p>
         <div class="bootcamp-facts">
+          <span>{ico("calendar")} November 2026</span>
           <span>{ico("check")} Completely free</span>
           <span>{ico("users")} Open to all UNN students</span>
-          <span>{ico("tools")} Hardware supplied</span>
           <span>{ico("award")} Hackathon prizes</span>
         </div>
         <div class="hero-cta">
@@ -1749,12 +1839,13 @@ def build_register():
 
       <div class="reg-hero mt-3">
         <div>
-          <span class="free-badge">{ico("check")} Free of charge</span>
+          <span class="free-badge">{ico("calendar")} November 2026 &middot; free of charge</span>
           <h1 class="mt-2">Africa's Hardware Revolution</h1>
           <p class="theme-line" style="font-family:var(--font-display);font-weight:600;font-size:clamp(1rem,2.2vw,1.35rem);color:var(--accent);margin-top:.5rem">From Spark to Ignition</p>
-          <p class="lede">A free hardware bootcamp at the University of Nigeria, Nsukka — open to students
-            and to anyone else who wants to build. Whatever you study, and whether or not you have ever
-            touched a circuit.</p>
+          <p class="programme-line"><strong>A Mega Hardware Conference this November</strong>, followed by
+            <strong>3 weeks of intensive practical hardware bootcamp</strong> and a <strong>hackathon</strong>.</p>
+          <p class="lede mt-2">At the University of Nigeria, Nsukka — open to students and to anyone else who
+            wants to build. Whatever you study, and whether or not you have ever touched a circuit.</p>
           <div class="callout mt-3">{ico("pin")}<span><strong>This bootcamp runs at UNN Nsukka.</strong>
             We are coming to other selected universities across South-East Nigeria next &mdash; at least one
             in each state. Register anyway and we will tell you when we reach yours.</span></div>
@@ -1777,7 +1868,7 @@ def build_register():
       <div class="sec-head sec-head--center">
         <span class="eyebrow">{ico("calendar")} Three things, one programme</span>
         <h2>It is more than a bootcamp</h2>
-        <p class="lede">A bootcamp, a hackathon inside it, and a one-day conference a few days later.
+        <p class="lede">A mega hardware conference, three weeks of intensive bootcamp, then a hackathon.
           One registration covers whichever of them you want.</p>
       </div>
       <div class="grid grid-3">
@@ -1857,9 +1948,9 @@ def build_register():
           <div class="field">
             <label>Tick everything you want to attend <span class="req">*</span></label>
             <div class="check-grid mt-1" data-require-one="events">
-              <label><input type="checkbox" name="events" value="Bootcamp" checked><span>Bootcamp</span></label>
-              <label><input type="checkbox" name="events" value="Hackathon" checked><span>Hackathon (during the bootcamp)</span></label>
-              <label><input type="checkbox" name="events" value="Conference" checked><span>Conference (one day, after)</span></label>
+              <label><input type="checkbox" name="events" value="Conference" checked><span>Conference (opens it)</span></label>
+              <label><input type="checkbox" name="events" value="Bootcamp" checked><span>Bootcamp (three weeks)</span></label>
+              <label><input type="checkbox" name="events" value="Hackathon" checked><span>Hackathon (closes it)</span></label>
             </div>
           </div>
         </fieldset>
