@@ -165,6 +165,8 @@ def head(title, desc, page):
 <meta property="og:description" content="{desc}">
 <meta property="og:url" content="{SITE_URL}/{page}">
 <meta property="og:image" content="{SITE_URL}/assets/img/og-image.png">
+<meta property="og:image:secure_url" content="{SITE_URL}/assets/img/og-image.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="{ORG} — South-East Nigeria's largest student hardware tech community">
