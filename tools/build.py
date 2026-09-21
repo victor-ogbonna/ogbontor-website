@@ -149,6 +149,10 @@ JS_V  = asset_v("assets/js/main.js")
 
 
 def head(title, desc, page):
+    # The home page lives at the bare domain. Pointing canonical/og:url at
+    # /index.html splits ranking signals and gives link-preview crawlers two
+    # separate cache entries for what is one page.
+    canon = f"{SITE_URL}/" if page == "index.html" else f"{SITE_URL}/{page}"
     nav = "\n".join(f'          <a href="{h}">{l}</a>' for h, l in NAV)
     return f'''<!doctype html>
 <html lang="en">
@@ -158,12 +162,12 @@ def head(title, desc, page):
 <title>{title}</title>
 <meta name="description" content="{desc}">
 <meta name="theme-color" content="#0B57D0">
-<link rel="canonical" href="{SITE_URL}/{page}">
+<link rel="canonical" href="{canon}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="{ORG}">
 <meta property="og:title" content="{title}">
 <meta property="og:description" content="{desc}">
-<meta property="og:url" content="{SITE_URL}/{page}">
+<meta property="og:url" content="{canon}">
 <meta property="og:image" content="{SITE_URL}/assets/img/og-image.png">
 <meta property="og:image:secure_url" content="{SITE_URL}/assets/img/og-image.png">
 <meta property="og:image:type" content="image/png">
